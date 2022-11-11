@@ -9,6 +9,8 @@ class Query():
         self.mydb = db.connectDB()
         self.cursor = self.mydb.cursor()
 
+        # TEST BRANCH
+
     def insert_Employee(self, employee):
         mydb = db.connectDB()
         mycursor = mydb.cursor()
