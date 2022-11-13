@@ -32,11 +32,11 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/image/C:/Users/Quoc Anh/Pictures/Camera Roll/moutain.jpg);
-border-radius: 20px;</string>
+     <string notr="true">border-radius: 20px;
+border-image: url(:/image/moutain.jpg);</string>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
@@ -53,7 +53,7 @@ border-radius: 20px;</string>
 border-radius: 15px;</string>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
