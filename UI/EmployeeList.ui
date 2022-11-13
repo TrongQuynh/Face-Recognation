@@ -124,7 +124,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Department</string>
+     <string>Departments</string>
     </property>
    </widget>
    <widget class="QTableWidget" name="tbl_Employee">
