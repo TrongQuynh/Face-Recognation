@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="backgr">
+    <file>add_employee.png</file>
+    <file>customer.png</file>
+    <file>department.png</file>
+    <file>immigration.png</file>
+    <file>employee.png</file>
+    <file>division.png</file>
+  </qresource>
+  <qresource prefix="thumnail">
+    <file>employee-background.jfif</file>
+  </qresource>
+</RCC>
