@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1388</width>
-    <height>980</height>
+    <width>1700</width>
+    <height>1000</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1391</width>
-     <height>981</height>
+     <width>1700</width>
+     <height>1000</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -363,7 +363,7 @@ font-weight: 500;
 background-color: transparent;</string>
     </property>
     <property name="text">
-     <string>Employee</string>
+     <string>Option 1</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_16">
@@ -443,7 +443,7 @@ font-weight: 500;
 background-color: transparent;</string>
     </property>
     <property name="text">
-     <string>Employee</string>
+     <string>Option 2</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_19">
