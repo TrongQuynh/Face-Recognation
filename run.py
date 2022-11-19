@@ -1,49 +1,40 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidgetItem, QTableView
-from PyQt5 import uic
+from PyQt5.QtWidgets import QAction, QApplication, QMessageBox, QWidget
+from PyQt5 import uic, QtWidgets
 from PyQt5.QtGui import QIcon, QPixmap
 
 import sys
+import time
+import os
+import shutil
+from threading import Thread, Timer
 
+import getDataset
 from Query import Query
+from model.Employee import Employee
+
+from UI.EmployeeList import UI_Employee_List
+from UI.NewEmployee import UI_New_Employee
+from UI.Login import Login
 
 
-class Run_UI(QMainWindow):
+class Run_UI():
     def __init__(self):
-        super().__init__()
-        uic.loadUi("./UI/EmployeeList.ui", self)
+        self.employeeList = UI_Employee_List()
+        # self.employeeList.show()
 
-        self.avatar.setPixmap(QPixmap("./public/img/default_avatar.png"))
-        self.format_UI_table()
-        self.show()
-        self.employees = self.loadData()
+        self.newEmployee = UI_New_Employee()
+        # self.newEmployee.show()
 
-    def format_UI_table(self):
-        # Set select by rows instead of individual cells
-        self.tbl_Employee.setSelectionBehavior(QTableView.SelectRows)
+        self.login = Login()
+        self.login.btn_Login.clicked.connect(self.event_Login)
+        self.login.show()
 
-        # Set width of
-        self.tbl_Employee.setColumnWidth(0, 80)
-        self.tbl_Employee.setColumnWidth(3, 150)
-        self.tbl_Employee.setColumnWidth(4, 150)
-        self.tbl_Employee.setHorizontalHeaderLabels(
-            ["ID", "Full Name", "Email", "Phone Number", "Department"])
-        # self.tbl_Employee.
-
-    def loadData(self):
-        query = Query()
-        self.employees = query.select_All_Employee()
-        self.tbl_Employee.setRowCount(50)
-        table_row = 0
-        # print(self.employees)
-        for e in self.employees:
-
-            self.tbl_Employee.setItem(
-                table_row, 0, QTableWidgetItem(str(e[0])))
-            self.tbl_Employee.setItem(table_row, 1, QTableWidgetItem(e[1]))
-            self.tbl_Employee.setItem(table_row, 2, QTableWidgetItem(e[2]))
-            self.tbl_Employee.setItem(table_row, 3, QTableWidgetItem(e[3]))
-            self.tbl_Employee.setItem(table_row, 4, QTableWidgetItem(e[4]))
-            table_row += 1
+    def event_Login(self):
+        if (self.login.check_Login()):
+            print("Login success")
+            self.login.hide()
+            # self.newEmployee.show()
+            self.employeeList.show()
 
 
 if __name__ == "__main__":
@@ -51,4 +42,4 @@ if __name__ == "__main__":
 
     ui = Run_UI()
 
-    app.exec_()
+    sys.exit(app.exec_())
