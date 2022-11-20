@@ -1,6 +1,5 @@
 <RCC>
-  <qresource prefix="avatar">
-    <file>default_avatar.png</file>
-    <file>logoHutech.png</file>
+  <qresource prefix="backgr">
+    <file>backgr-linear.jfif</file>
   </qresource>
 </RCC>

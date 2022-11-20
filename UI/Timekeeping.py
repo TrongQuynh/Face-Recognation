@@ -13,8 +13,11 @@ class Timekeeping(QMainWindow):
         super().__init__()
         uic.loadUi("./UI/Timekeeping.ui", self)
         self.center()
+        self.lbl_Background.setPixmap(
+            QPixmap("./public/img/backgroundColor.webp"))
+        self.logo.setPixmap(
+            QPixmap("./public/img/logoHutech.png"))
         self.recognize_thread = Recognize_thread()
-
         self.recognize_thread.start()
         self.recognize_thread.ImageUpdate.connect(self.ImageUpdateSlot)
         # self.btn_Back.setPixmap(QPixmap("./public/img/back.png"))
@@ -77,8 +80,8 @@ class Recognize_thread(QThread):
                     # confidence_format = "---"
                 cv2.putText(
                     frame, username, (x1, y1), cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 0))
-                cv2.putText(
-                    frame, confidence_format, (x1, y2), cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 0))
+                # cv2.putText(
+                #     frame, confidence_format, (x1, y2), cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 0))
 
             # Show FPS
             current_time = time.time()
@@ -91,9 +94,19 @@ class Recognize_thread(QThread):
                 FlippedImage = Image
                 ConvertToQtFormat = QImage(
                     FlippedImage.data, FlippedImage.shape[1], FlippedImage.shape[0], QImage.Format_RGB888)
-                Pic = ConvertToQtFormat.scaled(820, 570, Qt.KeepAspectRatio)
+                Pic = ConvertToQtFormat.scaled(800, 570, Qt.KeepAspectRatio)
                 self.ImageUpdate.emit(Pic)
 
     def stop(self):
         self.ThreadActive = False
         self.quit()
+
+
+class Clocl_thread(QThread):
+    def run(self):
+        self.ThreadActive = True
+        while self.ThreadActive:
+            pass
+
+    def stop(self):
+        self.ThreadActive = False
