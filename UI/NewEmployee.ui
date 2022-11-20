@@ -14,265 +14,281 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QWidget" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>20</y>
-      <width>181</width>
-      <height>41</height>
+      <x>0</x>
+      <y>0</y>
+      <width>1161</width>
+      <height>623</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <pointsize>18</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
+    <property name="styleSheet">
+     <string notr="true">QWidget#widget{
+	
+	border-image: url(:/backgr/backgr-linear.jfif);
+}</string>
     </property>
-    <property name="text">
-     <string>Employee</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="txt_Email">
-    <property name="geometry">
-     <rect>
-      <x>870</x>
-      <y>80</y>
-      <width>271</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>abc@gmail.com</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="txt_Username">
-    <property name="geometry">
-     <rect>
-      <x>530</x>
-      <y>80</y>
-      <width>271</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Nong Trong Quynh</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="txt_Phonenumber">
-    <property name="geometry">
-     <rect>
-      <x>530</x>
-      <y>180</y>
-      <width>271</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>093866522341</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="avatar">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>100</y>
-      <width>231</width>
-      <height>201</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="res.qrc">:/avatar/default_avatar.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="cbox_Department">
-    <property name="geometry">
-     <rect>
-      <x>870</x>
-      <y>180</y>
-      <width>271</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>None</string>
+    <widget class="QPushButton" name="btn_ClearAll">
+     <property name="geometry">
+      <rect>
+       <x>990</x>
+       <y>340</y>
+       <width>141</width>
+       <height>51</height>
+      </rect>
      </property>
-    </item>
-    <item>
      <property name="text">
-      <string>IT</string>
+      <string>Clear All</string>
      </property>
-    </item>
-    <item>
+    </widget>
+    <widget class="QTableWidget" name="tbl_Employee">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>400</y>
+       <width>761</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>Full Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Email</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Phonenumber</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Department</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Dataset</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLineEdit" name="txt_Phonenumber">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>180</y>
+       <width>271</width>
+       <height>41</height>
+      </rect>
+     </property>
      <property name="text">
-      <string>Marketing</string>
+      <string>093866522341</string>
      </property>
-    </item>
-    <item>
+    </widget>
+    <widget class="QPushButton" name="btn_temporarySave">
+     <property name="geometry">
+      <rect>
+       <x>990</x>
+       <y>250</y>
+       <width>141</width>
+       <height>51</height>
+      </rect>
+     </property>
      <property name="text">
-      <string>HR</string>
+      <string>Temporary Save</string>
      </property>
-    </item>
-    <item>
+    </widget>
+    <widget class="QLabel" name="dataSet_IMG">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>440</y>
+       <width>251</width>
+       <height>141</height>
+      </rect>
+     </property>
      <property name="text">
-      <string>Sales</string>
+      <string/>
      </property>
-    </item>
-    <item>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_ClearData">
+     <property name="geometry">
+      <rect>
+       <x>840</x>
+       <y>250</y>
+       <width>141</width>
+       <height>51</height>
+      </rect>
+     </property>
      <property name="text">
-      <string>Finance</string>
+      <string>Clear Data</string>
      </property>
-    </item>
-   </widget>
-   <widget class="QPushButton" name="btn_FaceData">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>330</y>
-      <width>131</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Get Face Data</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_Complete">
-    <property name="geometry">
-     <rect>
-      <x>970</x>
-      <y>560</y>
-      <width>171</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Complete</string>
-    </property>
-   </widget>
-   <widget class="QTableWidget" name="tbl_Employee">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>400</y>
-      <width>761</width>
-      <height>151</height>
-     </rect>
-    </property>
-    <column>
+    </widget>
+    <widget class="QLabel" name="avatar">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>100</y>
+       <width>231</width>
+       <height>201</height>
+      </rect>
+     </property>
      <property name="text">
-      <string>Full Name</string>
+      <string/>
      </property>
-    </column>
-    <column>
+     <property name="pixmap">
+      <pixmap>:/avatar/default_avatar.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txt_Username">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>80</y>
+       <width>271</width>
+       <height>41</height>
+      </rect>
+     </property>
      <property name="text">
-      <string>Email</string>
+      <string>Nong Trong Quynh</string>
      </property>
-    </column>
-    <column>
+    </widget>
+    <widget class="QComboBox" name="cbox_Department">
+     <property name="geometry">
+      <rect>
+       <x>860</x>
+       <y>180</y>
+       <width>271</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>None</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>IT</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Marketing</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>HR</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Sales</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Finance</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QPushButton" name="btn_Complete">
+     <property name="geometry">
+      <rect>
+       <x>960</x>
+       <y>560</y>
+       <width>171</width>
+       <height>51</height>
+      </rect>
+     </property>
      <property name="text">
-      <string>Phonenumber</string>
+      <string>Complete</string>
      </property>
-    </column>
-    <column>
+    </widget>
+    <widget class="QPushButton" name="btn_FaceData">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>330</y>
+       <width>131</width>
+       <height>51</height>
+      </rect>
+     </property>
      <property name="text">
-      <string>Department</string>
+      <string>Get Face Data</string>
      </property>
-    </column>
-    <column>
+    </widget>
+    <widget class="QPushButton" name="btn_ClearRow">
+     <property name="geometry">
+      <rect>
+       <x>840</x>
+       <y>340</y>
+       <width>141</width>
+       <height>51</height>
+      </rect>
+     </property>
      <property name="text">
-      <string>Dataset</string>
+      <string>Clear Row</string>
      </property>
-    </column>
-   </widget>
-   <widget class="QPushButton" name="btn_temporarySave">
-    <property name="geometry">
-     <rect>
-      <x>1000</x>
-      <y>250</y>
-      <width>141</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Temporary Save</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_ClearRow">
-    <property name="geometry">
-     <rect>
-      <x>850</x>
-      <y>340</y>
-      <width>141</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Clear Row</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="dataSet_IMG">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>440</y>
-      <width>251</width>
-      <height>141</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_ClearAll">
-    <property name="geometry">
-     <rect>
-      <x>1000</x>
-      <y>340</y>
-      <width>141</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Clear All</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_ClearData">
-    <property name="geometry">
-     <rect>
-      <x>850</x>
-      <y>250</y>
-      <width>141</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Clear Data</string>
-    </property>
-   </widget>
-   <widget class="Line" name="line">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>320</y>
-      <width>761</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
+    </widget>
+    <widget class="Line" name="line">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>320</y>
+       <width>761</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>181</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>18</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Employee</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txt_Email">
+     <property name="geometry">
+      <rect>
+       <x>860</x>
+       <y>80</y>
+       <width>271</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>abc@gmail.com</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

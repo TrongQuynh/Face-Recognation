@@ -14,65 +14,80 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QWidget" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>40</y>
-      <width>171</width>
-      <height>61</height>
+      <x>9</x>
+      <y>-1</y>
+      <width>1651</width>
+      <height>941</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <pointsize>16</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
+    <property name="styleSheet">
+     <string notr="true">QWidget#widget{
+border-image: url(:/backgr/backgr-linear.jfif);
+}</string>
     </property>
-    <property name="text">
-     <string>Department</string>
-    </property>
-   </widget>
-   <widget class="QTableWidget" name="tbl_Department">
-    <property name="geometry">
-     <rect>
-      <x>930</x>
-      <y>200</y>
-      <width>391</width>
-      <height>192</height>
-     </rect>
-    </property>
-    <column>
-     <property name="text">
-      <string>New Column</string>
+    <widget class="QTableWidget" name="tbl_Department">
+     <property name="geometry">
+      <rect>
+       <x>940</x>
+       <y>240</y>
+       <width>391</width>
+       <height>192</height>
+      </rect>
      </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Number Of Employee</string>
+     <column>
+      <property name="text">
+       <string>New Column</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Number Of Employee</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QTableWidget" name="tbl_Employee">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>200</y>
+       <width>251</width>
+       <height>561</height>
+      </rect>
      </property>
-    </column>
-   </widget>
-   <widget class="QTableWidget" name="tbl_Employee">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>160</y>
-      <width>251</width>
-      <height>561</height>
-     </rect>
-    </property>
-    <column>
-     <property name="text">
-      <string>Full Name</string>
+     <column>
+      <property name="text">
+       <string>Full Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Status</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>80</y>
+       <width>171</width>
+       <height>61</height>
+      </rect>
      </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Status</string>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
-    </column>
+     <property name="text">
+      <string>Department</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -87,6 +102,8 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections/>
 </ui>
