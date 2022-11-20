@@ -20,6 +20,7 @@ class UI_New_Employee(QMainWindow):
         self.format_UI_table()
         self.employees = []
         self.avatar.setPixmap(QPixmap("./public/img/default_avatar.png"))
+        self.btn_Back.setPixmap(QPixmap("./public/img/back.png"))
         self.time_string = str(int(time.time()))
         self.load_cbox_data()
 
@@ -32,6 +33,7 @@ class UI_New_Employee(QMainWindow):
         self.btn_ClearData.clicked.connect(self.event_clearTextField)
 
         self.tbl_Employee.cellClicked.connect(self.event_fillData)
+
         # self.show()
 
     def getData(self):

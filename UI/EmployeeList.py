@@ -27,6 +27,8 @@ class UI_Employee_List(QMainWindow):
         self.loadData_table()
         self.format_UI_table()
         self.table_event()
+        self.btn_Back.setPixmap(QPixmap("./public/img/back.png"))
+
         # self.show()
 
     def format_UI_table(self):

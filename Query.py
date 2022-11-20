@@ -89,6 +89,17 @@ class Query():
         myresult = mycursor.fetchone()
         return myresult
 
+    def select_Employee_by_department_ID(self, department_ID):
+        mydb = db.connectDB()
+        mycursor = mydb.cursor()
+        sql_query = "SELECT * FROM Employee WHERE department_id = %s"
+        values = (department_ID,)
+        mycursor.execute(sql_query, values)
+        # myresult = mycursor.fetchall()
+        myresult = mycursor.fetchall()
+        # print(myresult)
+        return myresult
+
 
 query = Query()
 # employee_1 = Employee("Phong", "abc@gmail.com", "0934234234", "/data/Quynh")

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1660</width>
-    <height>1000</height>
+    <width>1500</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,15 +17,15 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>40</y>
-      <width>171</width>
-      <height>61</height>
+      <x>110</x>
+      <y>20</y>
+      <width>181</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <pointsize>18</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -34,33 +34,13 @@
      <string>Department</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tbl_Department">
-    <property name="geometry">
-     <rect>
-      <x>930</x>
-      <y>200</y>
-      <width>391</width>
-      <height>192</height>
-     </rect>
-    </property>
-    <column>
-     <property name="text">
-      <string>New Column</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Number Of Employee</string>
-     </property>
-    </column>
-   </widget>
    <widget class="QTableWidget" name="tbl_Employee">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>70</x>
       <y>160</y>
-      <width>251</width>
-      <height>561</height>
+      <width>800</width>
+      <height>600</height>
      </rect>
     </property>
     <column>
@@ -70,9 +50,107 @@
     </column>
     <column>
      <property name="text">
-      <string>Status</string>
+      <string>Email</string>
      </property>
     </column>
+    <column>
+     <property name="text">
+      <string>Phonenumber</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Department</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Dataset</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QLabel" name="dataSet_IMG">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>440</y>
+      <width>251</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="btn_Back">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>71</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tbl_Department">
+    <property name="geometry">
+     <rect>
+      <x>1010</x>
+      <y>170</y>
+      <width>450</width>
+      <height>500</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>Full Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Email</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Phonenumber</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QLineEdit" name="txt_Search">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>111</y>
+      <width>331</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Search here</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="btn_Search">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>120</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -80,13 +158,15 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1660</width>
+     <width>1500</width>
      <height>26</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -14,16 +14,20 @@ from model.Employee import Employee
 
 from UI.EmployeeList import UI_Employee_List
 from UI.NewEmployee import UI_New_Employee
+from UI.Home import Home
 from UI.Login import Login
+# from UI.Department import Department
+from UI.TimekeepingRecord import Timekeeping_Record
+from UI.Timekeeping import Timekeeping
 
 
 class Run_UI():
     def __init__(self):
-        self.employeeList = UI_Employee_List()
-        # self.employeeList.show()
 
-        self.newEmployee = UI_New_Employee()
-        # self.newEmployee.show()
+        # self.department_UI = Department()
+        # self.timekeepingRecord_UI = Timekeeping_Record()
+        self.timekeeping_UI = Timekeeping()
+        # self.home = Home()
 
         self.login = Login()
         self.login.btn_Login.clicked.connect(self.event_Login)
@@ -33,8 +37,11 @@ class Run_UI():
         if (self.login.check_Login()):
             print("Login success")
             self.login.hide()
-            # self.newEmployee.show()
-            self.employeeList.show()
+
+            # self.home.show()
+            # self.department_UI.show()
+            # self.timekeepingRecord_UI.show()
+            self.timekeeping_UI.show()
 
 
 if __name__ == "__main__":
