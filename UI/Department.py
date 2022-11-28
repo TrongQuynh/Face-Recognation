@@ -1,12 +1,11 @@
 from PyQt5.QtWidgets import QMainWindow, QDesktopWidget, QTableWidgetItem, QTableView
-from PyQt5 import uic
+from PyQt5 import uic, QtGui
 from PyQt5.QtGui import QIcon, QPixmap
 
-import sys
-import os
-import time
+from PyQt5.QtCore import QRect, QPropertyAnimation
 from threading import Thread
 from Query import Query
+from datetime import datetime, date
 
 
 class Department(QMainWindow):
@@ -15,15 +14,43 @@ class Department(QMainWindow):
         uic.loadUi("./UI/Department.ui", self)
         self.center()
         self.btn_Back.setPixmap(QPixmap("./public/img/back.png"))
+        self.lbl_Background.setPixmap(
+            QPixmap("./public/img/backgroundColor.jfif"))
+        # self.btn_Search.setPixmap(
+        #     QPixmap("./public/img/search.png"))
+        # self.btn_Search_2.setPixmap(
+        #     QPixmap("./public/img/search.png"))
         self.intit_table()
-
-        self.departments = None
         self.employees = None
 
-        self.load_data_table_department()
-
         self.tbl_Department.cellClicked.connect(self.event_choose_department)
-        self.btn_Search.mousePressEvent = self.event_search_employee
+        self.btn_Search.clicked.connect(self.event_search_employee)
+        self.btn_Search_2.clicked.connect(self.event_search_department)
+
+        self.btn_CreateDepartment.clicked.connect(self.event_create_Department)
+
+    def init_form(self):
+        departments = Query().select_All_Department()
+        self.load_data_table_department(departments)
+        self.init_throughScreenText()
+
+    def init_throughScreenText(self):
+        self.label_Text.setText("HUTECH INSTITUTE of INTERNATIONAL EDUCATION")
+        self.setStyleSheet("#label_Text{color : yellow}")
+        self.label_Text.move(-30, 680)
+        self.loopCount = 100
+        self.doAnim()
+
+    def doAnim(self):
+
+        self.anim = QPropertyAnimation(self.label_Text, b"geometry")
+        # self.anim = QPropertyAnimation(self.frame, b"geometry")
+
+        self.anim.setDuration(10000)
+        self.anim.setStartValue(QRect(-400, 730, 400, 30))
+        self.anim.setEndValue(QRect(1700, 730, 400, 30))
+        self.anim.setLoopCount(self.loopCount)
+        self.anim.start()
 
     def center(self):
         qr = self.frameGeometry()
@@ -32,6 +59,10 @@ class Department(QMainWindow):
         self.move(qr.topLeft())
 
     def intit_table(self):
+        # Remove index of table
+        self.tbl_Department.verticalHeader().setVisible(False)
+        self.tbl_Employee.verticalHeader().setVisible(False)
+
         self.tbl_Employee.setSelectionBehavior(QTableView.SelectRows)
         self.tbl_Department.setSelectionBehavior(QTableView.SelectRows)
 
@@ -44,17 +75,17 @@ class Department(QMainWindow):
             ["ID", "Full Name", "Email", "Phone Number", "Status"])
 
         self.tbl_Department.setSelectionBehavior(QTableView.SelectRows)
-        self.tbl_Department.setColumnWidth(0, 50)
-        self.tbl_Department.setColumnWidth(1, 300)
-        self.tbl_Department.setColumnWidth(2, 100)
+        self.tbl_Department.setColumnWidth(0, 40)
+        self.tbl_Department.setColumnWidth(1, 170)
+        self.tbl_Department.setColumnWidth(2, 80)
         self.tbl_Department.setHorizontalHeaderLabels(
             ["ID", "Department name", "Total"])
 
-    def load_data_table_department(self):
-        self.departments = Query().select_All_Department()
-        self.tbl_Department.setRowCount(len(self.departments))
+    def load_data_table_department(self, departments):
+
+        self.tbl_Department.setRowCount(len(departments))
         table_row = 0
-        for d in self.departments:
+        for d in departments:
             total_employee = len(
                 Query().select_Employee_by_department_ID(int(d[0])))
             self.tbl_Department.setItem(
@@ -64,7 +95,12 @@ class Department(QMainWindow):
                 table_row, 2, QTableWidgetItem(str(total_employee)))
 
             table_row += 1
-        pass
+
+    def status_of_employee(self, e_ID):
+        date_today = date.today()
+        TR_id = Query().select_All_TKRecord_by_EmployeeID_and_Date(
+            int(e_ID), date_today)
+        return "ON" if TR_id else "OFF"
 
     def load_data_table_employee(self, employees):
         if (len(employees) < 1):
@@ -80,8 +116,13 @@ class Department(QMainWindow):
                 table_row, 2, QTableWidgetItem(str(e[2])))
             self.tbl_Employee.setItem(
                 table_row, 3, QTableWidgetItem(str(e[3])))
+
+            status = str(self.status_of_employee(e[0]))
+            color = QtGui.QColor(
+                255, 0, 0) if status == "OFF" else QtGui.QColor(0, 255, 0)
             self.tbl_Employee.setItem(
-                table_row, 4, QTableWidgetItem(str("ON")))
+                table_row, 4, QTableWidgetItem(status))
+            self.tbl_Employee.item(table_row, 4).setBackground(color)
             table_row += 1
     # Helper
 
@@ -124,3 +165,30 @@ class Department(QMainWindow):
                 if search_FName in e_FName or e_FName in search_FName:
                     employee_list.append(e)
             self.load_data_table_employee(employee_list)
+
+    def event_search_department(self):
+        txt_search = self.txt_Search_Department.text()
+        departments = []
+        if (len(str(txt_search)) < 1):
+            departments = Query().select_All_Department()
+            self.load_data_table_department(departments)
+            return
+
+        if (self.is_number(txt_search)):
+            department = Query().select_Department_by_ID(int(txt_search))
+            departments.append(department)
+            self.load_data_table_department(departments)
+        else:
+            for d in Query().select_All_Department():
+
+                if (str(d[1]).lower().replace(" ", "") in str(txt_search).lower() or str(txt_search).lower() in str(d[1]).lower().replace(" ", "")):
+                    departments.append(d)
+            self.load_data_table_department(departments)
+
+    def event_create_Department(self):
+        department_name = self.txt_DepartmentName.text()
+        if (len(department_name) < 1):
+            print("Notificatioin: Please Enter Department Name")
+            return
+        Query().insert_New_Department(department_name)
+        self.load_data_table_department(Query().select_All_Department())

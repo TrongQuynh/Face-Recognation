@@ -8,6 +8,7 @@
     <file>division.png</file>
   </qresource>
   <qresource prefix="thumnail">
+    <file>BackgroungHome.jpg</file>
     <file>employee-background.jfif</file>
   </qresource>
 </RCC>

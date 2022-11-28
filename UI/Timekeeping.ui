@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1500</width>
-    <height>900</height>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,14 +17,17 @@
    <widget class="QLabel" name="lbl_Capture">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>250</y>
+      <x>710</x>
+      <y>130</y>
       <width>760</width>
-      <height>570</height>
+      <height>571</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">#lbl_Capture{border: 1px solid black;}</string>
+     <string notr="true">#lbl_Capture{
+	border: 1px solid black;
+	border-radius: 15px
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -33,10 +36,10 @@
    <widget class="QTableWidget" name="lbl_Timekeeping">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>250</y>
+      <x>30</x>
+      <y>200</y>
       <width>650</width>
-      <height>571</height>
+      <height>501</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -64,6 +67,11 @@
     </column>
     <column>
      <property name="text">
+      <string>Time In</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
       <string>Time Out</string>
      </property>
     </column>
@@ -82,7 +90,7 @@
       <string>IT</string>
      </property>
     </item>
-    <item row="0" column="3">
+    <item row="0" column="4">
      <property name="text">
       <string>10:14</string>
      </property>
@@ -91,14 +99,15 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>210</y>
+      <x>710</x>
+      <y>90</y>
       <width>131</width>
       <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <family>Segoe UI</family>
       <pointsize>14</pointsize>
       <weight>75</weight>
       <bold>true</bold>
@@ -113,7 +122,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1501</width>
+      <width>1500</width>
       <height>861</height>
      </rect>
     </property>
@@ -128,47 +137,65 @@
     <property name="geometry">
      <rect>
       <x>1280</x>
-      <y>100</y>
+      <y>80</y>
       <width>191</width>
-      <height>61</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>18</pointsize>
+      <family>Digital-7 Italic</family>
+      <pointsize>20</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">#lbl_Clock{
+	color:#ff0000;
+}</string>
+    </property>
     <property name="text">
-     <string>10:14:23</string>
+     <string>00:00:00</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="lbl_Date">
     <property name="geometry">
      <rect>
-      <x>1000</x>
-      <y>100</y>
+      <x>1080</x>
+      <y>80</y>
       <width>191</width>
-      <height>61</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>18</pointsize>
+      <family>Digital-7 Italic</family>
+      <pointsize>20</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">#lbl_Date{
+	color: rgb(141, 141, 141);
+}</string>
+    </property>
     <property name="text">
      <string>19/11/2022</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="logo">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>170</y>
+      <x>30</x>
+      <y>120</y>
       <width>81</width>
       <height>71</height>
      </rect>
@@ -183,14 +210,15 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>190</y>
+      <x>120</x>
+      <y>140</y>
       <width>231</width>
-      <height>31</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <family>Segoe UI</family>
       <pointsize>14</pointsize>
       <weight>75</weight>
       <bold>true</bold>
@@ -199,25 +227,174 @@
     <property name="text">
      <string>Timekeeping Table</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>60</y>
-      <width>231</width>
-      <height>31</height>
+      <x>60</x>
+      <y>3</y>
+      <width>121</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <family>Segoe UI</family>
+      <pointsize>10</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="text">
      <string>Timekeeping</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="btn_Back">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>3</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../public/img/back.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QTimeEdit" name="TE_TimeOut">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>160</y>
+      <width>118</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="time">
+     <time>
+      <hour>17</hour>
+      <minute>0</minute>
+      <second>0</second>
+     </time>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>120</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI</family>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Record Time Out</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_Text">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>710</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>HUTECH</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_Header">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1500</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#lbl_Header{background-color:#248f8f }</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_Close">
+    <property name="geometry">
+     <rect>
+      <x>1460</x>
+      <y>3</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../public/img/close.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_Minimize">
+    <property name="geometry">
+     <rect>
+      <x>1420</x>
+      <y>3</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../public/img/minimize.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <zorder>lbl_Background</zorder>
@@ -228,7 +405,14 @@
    <zorder>logo</zorder>
    <zorder>label_2</zorder>
    <zorder>label</zorder>
+   <zorder>TE_TimeOut</zorder>
+   <zorder>label_4</zorder>
+   <zorder>label_Text</zorder>
+   <zorder>lbl_Header</zorder>
+   <zorder>lbl_Close</zorder>
+   <zorder>btn_Back</zorder>
    <zorder>label_3</zorder>
+   <zorder>lbl_Minimize</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

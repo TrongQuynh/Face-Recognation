@@ -27,7 +27,7 @@ def run():
     # capture = cv2.VideoCapture("output2.webm")
     # capture = cv2.VideoCapture("output.mp4")
 
-    capture = cv2.VideoCapture(0)
+    capture = cv2.VideoCapture(1)
 
     while (True):
         _, frame = capture.read()
@@ -50,12 +50,11 @@ def run():
             # Prefic and get ID user
             id, confidence = recognizer.predict(gray[y1:y2, x1:x2])
 
-            username = str(names[id]).split("-")[0]
             # confidence_format = f"{int(confidence)} %"
             confidence_format = "  {0}%".format(round(100 - confidence))
             print(id, confidence)
-            if (confidence < 100):
-                pass
+            if (confidence < 70):
+                username = str(names[id]).split("-")[0]
             else:
                 username = "Unknown"
                 # confidence_format = "---"

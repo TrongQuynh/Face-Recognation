@@ -7,28 +7,27 @@
     <x>0</x>
     <y>0</y>
     <width>1500</width>
-    <height>900</height>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-<<<<<<< HEAD
    <widget class="QLabel" name="logo">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>10</y>
-      <width>91</width>
-      <height>71</height>
+      <x>390</x>
+      <y>110</y>
+      <width>41</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="res.qrc">:/avatar/default_avatar.png</pixmap>
+     <pixmap>:/avatar/default_avatar.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -37,15 +36,16 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>10</y>
-      <width>261</width>
-      <height>51</height>
+      <x>60</x>
+      <y>3</y>
+      <width>181</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <family>Segoe UI</family>
+      <pointsize>10</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -53,15 +53,21 @@
     <property name="text">
      <string>Timekeeping Record</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QTableWidget" name="tbl_Timekeeping">
     <property name="geometry">
      <rect>
-      <x>1070</x>
-      <y>200</y>
+      <x>1080</x>
+      <y>160</y>
       <width>381</width>
-      <height>601</height>
+      <height>571</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#tbl_Timekeeping{background: transparent;}</string>
     </property>
     <column>
      <property name="text">
@@ -82,15 +88,23 @@
    <widget class="QTableWidget" name="tbl_Employee">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>200</y>
+      <x>480</x>
+      <y>160</y>
       <width>551</width>
-      <height>601</height>
+      <height>571</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#tbl_Employee{background: transparent;}</string>
     </property>
     <column>
      <property name="text">
       <string>ID</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>New Column</string>
      </property>
     </column>
     <column>
@@ -107,11 +121,14 @@
    <widget class="QTableWidget" name="tbl_Department">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>200</y>
+      <x>60</x>
+      <y>160</y>
       <width>371</width>
-      <height>601</height>
+      <height>571</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#tbl_Department{background: transparent;}</string>
     </property>
     <column>
      <property name="text">
@@ -132,14 +149,20 @@
    <widget class="QLabel" name="btn_Back">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>61</width>
-      <height>41</height>
+      <x>20</x>
+      <y>3</y>
+      <width>30</width>
+      <height>30</height>
      </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../public/img/back.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -148,28 +171,34 @@
    <widget class="QLineEdit" name="txt_Search_Department">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>160</y>
+      <x>60</x>
+      <y>120</y>
       <width>221</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit{background: transparent;border:None;border-bottom:1px solid;}</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="txt_Search_Employee">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>160</y>
+      <x>480</x>
+      <y>120</y>
       <width>251</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit{background: transparent;border:None;border-bottom:1px solid;}</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="rb_InTime">
     <property name="geometry">
      <rect>
-      <x>1220</x>
-      <y>160</y>
+      <x>1370</x>
+      <y>80</y>
       <width>95</width>
       <height>20</height>
      </rect>
@@ -181,8 +210,8 @@
    <widget class="QRadioButton" name="rb_GoLate">
     <property name="geometry">
      <rect>
-      <x>1340</x>
-      <y>160</y>
+      <x>1370</x>
+      <y>120</y>
       <width>95</width>
       <height>20</height>
      </rect>
@@ -191,11 +220,11 @@
      <string>Go Late</string>
     </property>
    </widget>
-   <widget class="QDateEdit" name="dateEdit">
+   <widget class="QDateEdit" name="to_Date">
     <property name="geometry">
      <rect>
-      <x>1080</x>
-      <y>160</y>
+      <x>1230</x>
+      <y>120</y>
       <width>110</width>
       <height>22</height>
      </rect>
@@ -261,129 +290,199 @@
      <string>Total Employee : 0</string>
     </property>
    </widget>
-   <widget class="QLabel" name="btn_Search_Department">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>170</y>
-      <width>55</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Search</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="btn_Search_Employee">
-    <property name="geometry">
-     <rect>
-      <x>740</x>
-      <y>170</y>
-      <width>55</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Search</string>
-=======
-   <widget class="QWidget" name="widget" native="true">
+   <widget class="QLabel" name="lbl_Background">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1035</width>
-      <height>549</height>
+      <width>1500</width>
+      <height>800</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QDateEdit" name="from_Date">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>120</y>
+      <width>110</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>100</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>From Date</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>1230</x>
+      <y>100</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>To Date</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_Text">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>740</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>HUTECH</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_Close">
+    <property name="geometry">
+     <rect>
+      <x>1460</x>
+      <y>3</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../public/img/close.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_Header">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1500</width>
+      <height>35</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QWidget#widget{
-	
-	border-image: url(:/backgr/backgr-linear.jfif);
-}</string>
->>>>>>> bea7943ea3c2b42e59268aae5a855f6e7de3cc2b
+     <string notr="true">#lbl_Header{background-color:#248f8f }</string>
     </property>
-    <widget class="QTableView" name="tableView">
-     <property name="geometry">
-      <rect>
-       <x>440</x>
-       <y>110</y>
-       <width>591</width>
-       <height>401</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>170</x>
-       <y>190</y>
-       <width>141</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Nong Trong Quynh</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>350</y>
-       <width>55</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Time in: </string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>140</y>
-       <width>131</width>
-       <height>131</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>:/avatar/default_avatar.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>380</y>
-       <width>55</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Time out: </string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>320</y>
-       <width>55</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Date: </string>
-     </property>
-    </widget>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
+   <widget class="QPushButton" name="btn_Search_Employee">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>120</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../public/img/search.png</normaloff>../public/img/search.png</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Search_Department">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>120</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../public/img/search.png</normaloff>../public/img/search.png</iconset>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_Minimize">
+    <property name="geometry">
+     <rect>
+      <x>1420</x>
+      <y>3</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../public/img/minimize.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <zorder>lbl_Background</zorder>
+   <zorder>tbl_Timekeeping</zorder>
+   <zorder>tbl_Employee</zorder>
+   <zorder>tbl_Department</zorder>
+   <zorder>txt_Search_Department</zorder>
+   <zorder>txt_Search_Employee</zorder>
+   <zorder>rb_InTime</zorder>
+   <zorder>rb_GoLate</zorder>
+   <zorder>to_Date</zorder>
+   <zorder>lbl_Timekeeping</zorder>
+   <zorder>lbl_Department</zorder>
+   <zorder>lbl_Employee</zorder>
+   <zorder>from_Date</zorder>
+   <zorder>label</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_Text</zorder>
+   <zorder>logo</zorder>
+   <zorder>lbl_Header</zorder>
+   <zorder>lbl_Close</zorder>
+   <zorder>label_6</zorder>
+   <zorder>btn_Back</zorder>
+   <zorder>btn_Search_Employee</zorder>
+   <zorder>btn_Search_Department</zorder>
+   <zorder>lbl_Minimize</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

@@ -1,9 +1,8 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidgetItem, QTableView
+from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QPixmap
 
-import sys
 
 from Query import Query
 from model.Employee import Employee
@@ -23,7 +22,10 @@ class Login(QMainWindow):
         self.txt_Pwd.setText("123")
 
     def event_Close(self, *arg, **kwargs):
-        self.close()
+        reply = QMessageBox.question(
+            self, "Warning", "Are you sure want to close application ?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.close()
 
     def check_Login(self):
         username = self.txt_Username.text()

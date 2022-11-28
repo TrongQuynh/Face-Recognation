@@ -13,7 +13,7 @@ class TimekeepingRecord:
         return datetime.now()
 
     def get_time_now(self):
-        return datetime.now().strftime("%H:%M:%S")
+        return datetime.now()
 
     def show_info(self):
         print("Employee ID: " + self.e_id+"\nTime: " + self.date + "\n" + "Time in: " +

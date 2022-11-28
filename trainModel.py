@@ -38,7 +38,7 @@ for image_path in paths:
     for (x, y, w, h) in faces:
         face_store.append(img_arr[y:y+h, x:x+w])
         id_store.append(int(id))
-
+    print(str(tmp_path).split("\\")[2])
     img_show = cv2.imread(image_path, 1)
     cv2.imshow("Show Image", mat=img_show)
     key = cv2.waitKey(1)

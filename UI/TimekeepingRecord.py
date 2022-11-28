@@ -2,9 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QDesktopWidget, QTableWidgetItem, QTabl
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon, QPixmap
 
-import sys
-import os
-import time
+from PyQt5.QtCore import QRect, QPropertyAnimation
 from threading import Thread
 from Query import Query
 
@@ -15,15 +13,42 @@ class Timekeeping_Record(QMainWindow):
         uic.loadUi("./UI/TimekeepingRecord.ui", self)
         self.center()
         self.btn_Back.setPixmap(QPixmap("./public/img/back.png"))
+        self.lbl_Background.setPixmap(
+            QPixmap("./public/img/backgroundColor.jfif"))
         self.intit_table()
 
         self.departments = None
         self.employees = None
 
-        self.load_data_table_department()
-
         self.tbl_Department.cellClicked.connect(self.event_choose_department)
-        self.btn_Search_Employee.mousePressEvent = self.event_search_employee
+        self.tbl_Employee.cellClicked.connect(self.event_choose_employee)
+
+        self.btn_Search_Department.clicked.connect(
+            self.event_search_department)
+        self.btn_Search_Employee.clicked.connect(self.event_search_employee)
+
+    def init_form(self):
+        self.departments = Query().select_All_Department()
+        self.load_data_table_department(self.departments)
+        self.init_throughScreenText()
+
+    def init_throughScreenText(self):
+        self.label_Text.setText("HUTECH INSTITUTE of INTERNATIONAL EDUCATION")
+        self.setStyleSheet("#label_Text{color : yellow}")
+        self.label_Text.move(-30, 680)
+        self.loopCount = 100
+        self.doAnim()
+
+    def doAnim(self):
+
+        self.anim = QPropertyAnimation(self.label_Text, b"geometry")
+        # self.anim = QPropertyAnimation(self.frame, b"geometry")
+
+        self.anim.setDuration(10000)
+        self.anim.setStartValue(QRect(-400, 740, 400, 30))
+        self.anim.setEndValue(QRect(1700, 740, 400, 30))
+        self.anim.setLoopCount(self.loopCount)
+        self.anim.start()
 
     def center(self):
         qr = self.frameGeometry()
@@ -32,8 +57,14 @@ class Timekeeping_Record(QMainWindow):
         self.move(qr.topLeft())
 
     def intit_table(self):
+        # Remove index of table
+        self.tbl_Employee.verticalHeader().setVisible(False)
+        self.tbl_Department.verticalHeader().setVisible(False)
+        self.tbl_Timekeeping.verticalHeader().setVisible(False)
+
         self.tbl_Employee.setSelectionBehavior(QTableView.SelectRows)
         self.tbl_Department.setSelectionBehavior(QTableView.SelectRows)
+        self.tbl_Timekeeping.setSelectionBehavior(QTableView.SelectRows)
 
         self.tbl_Employee.setColumnWidth(0, 50)
         self.tbl_Employee.setColumnWidth(1, 200)
@@ -41,20 +72,20 @@ class Timekeeping_Record(QMainWindow):
         self.tbl_Employee.setColumnWidth(3, 200)
         self.tbl_Employee.setColumnWidth(4, 50)
         self.tbl_Employee.setHorizontalHeaderLabels(
-            ["ID", "Full Name", "Email", "Phone Number", "Status"])
+            ["ID", "Full Name", "Email", "Phone Number"])
 
         self.tbl_Department.setSelectionBehavior(QTableView.SelectRows)
         self.tbl_Department.setColumnWidth(0, 50)
-        self.tbl_Department.setColumnWidth(1, 300)
+        self.tbl_Department.setColumnWidth(1, 219)
         self.tbl_Department.setColumnWidth(2, 100)
         self.tbl_Department.setHorizontalHeaderLabels(
             ["ID", "Department name", "Total"])
 
-    def load_data_table_department(self):
-        self.departments = Query().select_All_Department()
-        self.tbl_Department.setRowCount(len(self.departments))
+    def load_data_table_department(self, departments):
+        self.tbl_Department.setRowCount(len(departments))
         table_row = 0
-        for d in self.departments:
+        for d in departments:
+            print(d)
             total_employee = len(
                 Query().select_Employee_by_department_ID(int(d[0])))
             self.tbl_Department.setItem(
@@ -89,6 +120,21 @@ class Timekeeping_Record(QMainWindow):
         self.lbl_Employee.setText(
             f"Total Employee: {str(len(employees))}")
 
+    def load_data_table_TKRecord(self, data_record):
+        self.tbl_Timekeeping.setRowCount(len(data_record))
+        table_row = 0
+        for r in data_record:
+
+            self.tbl_Timekeeping.setItem(
+                table_row, 0, QTableWidgetItem(str(r[1])))
+            self.tbl_Timekeeping.setItem(
+                table_row, 1, QTableWidgetItem(str(r[2])))
+            time_out = r[3]
+            if (r[3] == None):
+                time_out = ""
+            self.tbl_Timekeeping.setItem(
+                table_row, 2, QTableWidgetItem(str(time_out)))
+
     # Helper
     def is_number(self, number):
         try:
@@ -105,8 +151,13 @@ class Timekeeping_Record(QMainWindow):
         # [(19, 'Nong Trong Quynh', 'abc@gmail.com', '093866522341', 'NongTrongQuynh-1668816362', 1)]
         self.load_data_table_employee(self.employees)
 
-    def event_search_employee(self, *arg, **kwargs):
+    def event_choose_employee(self, row, col):
+        employee_ID = self.tbl_Employee.item(row, 0).text()
+        record_data = Query().select_All_TKRecord_by_EmployeeID(int(employee_ID))
+        # (2, datetime.date(2022, 2, 15), datetime.timedelta(seconds=36863), None, 19)
+        self.load_data_table_TKRecord(record_data)
 
+    def event_search_employee(self, *arg, **kwargs):
         current_department_row = self.tbl_Department.currentRow()
         if (current_department_row < 0):
             print("Notification: Please choose department")
@@ -129,3 +180,22 @@ class Timekeeping_Record(QMainWindow):
                 if search_FName in e_FName or e_FName in search_FName:
                     employee_list.append(e)
             self.load_data_table_employee(employee_list)
+
+    def event_search_department(self):
+        txt_search = self.txt_Search_Department.text()
+        departments = []
+        if (len(str(txt_search)) < 1):
+            departments = Query().select_All_Department()
+            self.load_data_table_department(departments)
+            return
+
+        if (self.is_number(txt_search)):
+            department = Query().select_Department_by_ID(int(txt_search))
+            departments.append(department)
+            self.load_data_table_department(departments)
+        else:
+            for d in Query().select_All_Department():
+
+                if (str(d[1]).lower().replace(" ", "") in str(txt_search).lower() or str(txt_search).lower() in str(d[1]).lower().replace(" ", "")):
+                    departments.append(d)
+            self.load_data_table_department(departments)

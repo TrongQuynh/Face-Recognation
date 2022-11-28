@@ -7,26 +7,26 @@
     <x>0</x>
     <y>0</y>
     <width>1500</width>
-    <height>900</height>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="widget" native="true">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-<<<<<<< HEAD
-      <x>110</x>
-      <y>20</y>
-      <width>181</width>
-      <height>41</height>
+      <x>60</x>
+      <y>3</y>
+      <width>121</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>18</pointsize>
+      <family>Segoe UI</family>
+      <pointsize>10</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -34,15 +34,21 @@
     <property name="text">
      <string>Department</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QTableWidget" name="tbl_Employee">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>160</y>
-      <width>800</width>
-      <height>600</height>
+      <x>20</x>
+      <y>180</y>
+      <width>721</width>
+      <height>511</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#tbl_Employee{background: transparent;}</string>
     </property>
     <column>
      <property name="text">
@@ -90,9 +96,78 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>20</y>
-      <width>71</width>
-      <height>41</height>
+      <y>3</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../public/img/back.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tbl_Department">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>180</y>
+      <width>300</width>
+      <height>511</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#tbl_Department{background: transparent;}</string>
+    </property>
+    <column>
+     <property name="text">
+      <string>Full Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Email</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Phonenumber</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QLineEdit" name="txt_Search">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>140</y>
+      <width>331</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit{background: transparent;border:None;border-bottom:1px solid;}</string>
+    </property>
+    <property name="text">
+     <string>Search here</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_Background">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1500</width>
+      <height>800</height>
      </rect>
     </property>
     <property name="text">
@@ -102,127 +177,282 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tbl_Department">
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>1010</x>
-      <y>170</y>
-      <width>450</width>
-      <height>500</height>
+      <x>20</x>
+      <y>80</y>
+      <width>181</width>
+      <height>31</height>
      </rect>
     </property>
-    <column>
-     <property name="text">
-      <string>Full Name</string>
-=======
-      <x>9</x>
-      <y>-1</y>
-      <width>1651</width>
-      <height>941</height>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Employee List</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>80</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Department List</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="txt_Search_Department">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>140</y>
+      <width>251</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QWidget#widget{
-border-image: url(:/backgr/backgr-linear.jfif);
-}</string>
+     <string notr="true">QLineEdit{background: transparent;border:None;border-bottom:1px solid;}</string>
     </property>
-    <widget class="QTableWidget" name="tbl_Department">
-     <property name="geometry">
-      <rect>
-       <x>940</x>
-       <y>240</y>
-       <width>391</width>
-       <height>192</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string>New Column</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Number Of Employee</string>
-      </property>
-     </column>
-    </widget>
-    <widget class="QTableWidget" name="tbl_Employee">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>200</y>
-       <width>251</width>
-       <height>561</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string>Full Name</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Status</string>
-      </property>
-     </column>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>80</y>
-       <width>171</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
->>>>>>> bea7943ea3c2b42e59268aae5a855f6e7de3cc2b
-     </property>
-     <property name="text">
-<<<<<<< HEAD
-      <string>Email</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Phonenumber</string>
-=======
-      <string>Department</string>
->>>>>>> bea7943ea3c2b42e59268aae5a855f6e7de3cc2b
-     </property>
-    </widget>
+    <property name="text">
+     <string>Search Here</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="txt_Search">
+   <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>111</y>
-      <width>331</width>
+      <x>1183</x>
+      <y>160</y>
+      <width>20</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="txt_DepartmentName">
+    <property name="geometry">
+     <rect>
+      <x>1210</x>
+      <y>240</y>
+      <width>221</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit{background: transparent;border:None;border-bottom:1px solid;}</string>
+    </property>
+    <property name="text">
+     <string>Enter name</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>1220</x>
+      <y>120</y>
+      <width>221</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>New Department</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>1210</x>
+      <y>200</y>
+      <width>221</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Department Name</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_CreateDepartment">
+    <property name="geometry">
+     <rect>
+      <x>1210</x>
+      <y>300</y>
+      <width>161</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Create Department</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_Text">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>710</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>HUTECH</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_Header">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1500</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#lbl_Header{background-color:#248f8f }</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_Close">
+    <property name="geometry">
+     <rect>
+      <x>1460</x>
+      <y>3</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../public/img/close.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Search_2">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>140</y>
+      <width>41</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Search here</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../public/img/search.png</normaloff>../public/img/search.png</iconset>
     </property>
    </widget>
-   <widget class="QLabel" name="btn_Search">
+   <widget class="QPushButton" name="btn_Search">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>120</y>
-      <width>55</width>
-      <height>16</height>
+      <x>360</x>
+      <y>140</y>
+      <width>41</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../public/img/search.png</normaloff>../public/img/search.png</iconset>
     </property>
    </widget>
+   <widget class="QLabel" name="lbl_Minimize">
+    <property name="geometry">
+     <rect>
+      <x>1420</x>
+      <y>3</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../public/img/minimize.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <zorder>lbl_Background</zorder>
+   <zorder>tbl_Employee</zorder>
+   <zorder>dataSet_IMG</zorder>
+   <zorder>tbl_Department</zorder>
+   <zorder>txt_Search</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_3</zorder>
+   <zorder>txt_Search_Department</zorder>
+   <zorder>line</zorder>
+   <zorder>txt_DepartmentName</zorder>
+   <zorder>label_4</zorder>
+   <zorder>label_5</zorder>
+   <zorder>btn_CreateDepartment</zorder>
+   <zorder>label_Text</zorder>
+   <zorder>lbl_Header</zorder>
+   <zorder>btn_Back</zorder>
+   <zorder>label</zorder>
+   <zorder>lbl_Close</zorder>
+   <zorder>btn_Search_2</zorder>
+   <zorder>btn_Search</zorder>
+   <zorder>lbl_Minimize</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

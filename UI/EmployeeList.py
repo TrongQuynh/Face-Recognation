@@ -1,8 +1,9 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidgetItem, QTableView
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtCore import QThread, Qt, pyqtSignal
 
-import sys
+from PyQt5.QtCore import QRect, QPropertyAnimation
 import os
 import time
 from threading import Thread
@@ -22,24 +23,52 @@ class UI_Employee_List(QMainWindow):
         uic.loadUi("./UI/EmployeeList.ui", self)
 
         self.avatar.setPixmap(QPixmap("./public/img/logoHutech.png"))
-
+        self.lbl_Background.setPixmap(
+            QPixmap("./public/img/backgroundColor.jfif"))
         self.employees = None
-        self.loadData_table()
-        self.format_UI_table()
+        self.init_table()
         self.table_event()
+        self.btn_Delete.clicked.connect(self.event_delete_employee)
+        self.btn_Search.clicked.connect(self.event_search)
         self.btn_Back.setPixmap(QPixmap("./public/img/back.png"))
 
         # self.show()
+    def init_form(self):
+        query = Query()
+        employees = query.select_All_Employee()
+        self.loadData_table(employees)
+        self.init_throughScreenText()
+        self.showDataset_thread = LoadDataset_Thread()
 
-    def format_UI_table(self):
+    def init_throughScreenText(self):
+        self.label_Text.setText("HUTECH INSTITUTE of INTERNATIONAL EDUCATION")
+        self.setStyleSheet("#label_Text{color : yellow}")
+        self.label_Text.move(-30, 680)
+        self.loopCount = 100
+        self.doAnim()
+
+    def doAnim(self):
+
+        self.anim = QPropertyAnimation(self.label_Text, b"geometry")
+        # self.anim = QPropertyAnimation(self.frame, b"geometry")
+
+        self.anim.setDuration(10000)
+        self.anim.setStartValue(QRect(-400, 730, 400, 30))
+        self.anim.setEndValue(QRect(1700, 730, 400, 30))
+        self.anim.setLoopCount(self.loopCount)
+        self.anim.start()
+
+    def init_table(self):
+        # Remove index of table
+        self.tbl_Employee.verticalHeader().setVisible(False)
         # Set select by rows instead of individual cells
         self.tbl_Employee.setSelectionBehavior(QTableView.SelectRows)
 
         # Set width of
         self.tbl_Employee.setColumnWidth(0, 50)
-        self.tbl_Employee.setColumnWidth(1, 200)
-        self.tbl_Employee.setColumnWidth(2, 200)
-        self.tbl_Employee.setColumnWidth(3, 250)
+        self.tbl_Employee.setColumnWidth(1, 250)
+        self.tbl_Employee.setColumnWidth(2, 265)
+        self.tbl_Employee.setColumnWidth(3, 262)
         self.tbl_Employee.setColumnWidth(4, 250)
         self.tbl_Employee.setHorizontalHeaderLabels(
             ["ID", "Full Name", "Email", "Phone Number", "Department"])
@@ -47,14 +76,11 @@ class UI_Employee_List(QMainWindow):
     def table_event(self):
         self.tbl_Employee.cellClicked.connect(self.event_cell_was_clicked)
 
-    def loadData_table(self):
-        query = Query()
-        self.employees = query.select_All_Employee()
+    def loadData_table(self, employees):
 
         table_row = 0
-        # print(self.employees)
-        self.tbl_Employee.setRowCount(len(self.employees))
-        for e in self.employees:
+        self.tbl_Employee.setRowCount(len(employees))
+        for e in employees:
             department_name = Query().select_Department_by_ID(e[5])[
                 1]  # (1, 'IT')
             self.tbl_Employee.setItem(
@@ -75,37 +101,17 @@ class UI_Employee_List(QMainWindow):
             department_id)[1]  # (1, 'IT')
         self.txt_Department.setText(department_name)
 
-    def load_dataset(self):
-        global is_thread_running
-        while (is_thread_running):
-            for image in os.listdir(f"./data/dataset/{current_dataset}"):
-                # path_str = f"dataset/{name}/{image}"
-                path_str = os.path.join(
-                    f".\data\dataset\{current_dataset}", image)
-                self.dataset_IMG.setPixmap(QPixmap(path_str))
-                time.sleep(1)
-
     def event_load_dataset(self, folder_name):
-        global is_thread_running, thread_dataset, current_dataset
+
         if not os.path.isdir(f"./data/dataset/{folder_name}"):
             print("Notification: Dataset not exist")
             return
-        if thread_dataset == None:  # if not have dataset showing
-            is_thread_running = True
-            current_dataset = folder_name
-            thread_dataset = Thread(
-                target=self.load_dataset, args=[])
-            thread_dataset.start()
-        else:
-            if (current_dataset == folder_name):
-                return
-            current_dataset = folder_name
-            # thread_dataset = None
-            # time.sleep(1)
-            # is_thread_running = True
-            # thread_dataset = Thread(
-            #     target=self.load_dataset, args=(folder_name,))
-            # thread_dataset.start()
+        self.showDataset_thread.start()
+        self.showDataset_thread.folder_name = folder_name
+        self.showDataset_thread.ImageUpdate.connect(self.ImageUpdateDataset)
+
+    def ImageUpdateDataset(self, path_img):
+        self.dataset_IMG.setPixmap(QPixmap(str(path_img)))
 
     def event_cell_was_clicked(self, row, col):
         e_id = self.tbl_Employee.item(row, 0).text()
@@ -115,6 +121,66 @@ class UI_Employee_List(QMainWindow):
         self.loadData_to_info_employee(employee)
         self.event_load_dataset(folder_name=folder_name)
 
-    def event_kill_all_thread(self):
-        global is_thread_running
-        is_thread_running = False
+    def event_stop_all_thread(self):
+        self.loopCount = 0
+        self.showDataset_thread.stop()
+
+    def event_delete_employee(self):
+        current_row = self.tbl_Employee.currentRow()
+        if (current_row < 0):
+            print("Notification: Please choose employee")
+            return
+        employee_ID = int(self.tbl_Employee.item(current_row, 0).text())
+        Query().delete_Employee_by_ID(employee_ID)
+        query = Query()
+        employees = query.select_All_Employee()
+        self.loadData_table(employees)
+
+    # Helper
+    def is_number(self, number):
+        try:
+            int(number)
+            return True
+        except:
+            return False
+
+    def event_search(self):
+        employees = Query().select_All_Employee()
+        employee_list = []
+        text_search = self.txt_Search.text()
+        if (self.is_number(text_search)):
+            for e in employees:
+                if e[0] == int(text_search):
+                    employee_list.append(e)
+            self.loadData_table(employee_list)
+        else:
+            for e in employees:
+                e_FName = str(e[1]).replace(" ", "").lower()
+                search_FName = str(text_search).replace(" ", "").lower()
+                if search_FName in e_FName or e_FName in search_FName:
+                    employee_list.append(e)
+            self.loadData_table(employee_list)
+
+
+class LoadDataset_Thread(QThread):
+    folder_name = None
+    ImageUpdate = pyqtSignal(str)
+
+    def run(self):
+        self.ThreadActive = True
+        while (self.ThreadActive):
+
+            if not os.path.isdir(f"./data/dataset/{self.folder_name}"):
+                print("Notification: Not found folder: " +
+                      str(f"{os.getcwd()}/data/dataset/{self.folder_name}"))
+                self.stop()
+                return
+            for image in os.listdir(f"./data/dataset/{self.folder_name}"):
+                path_str = os.path.join(
+                    f".\data\dataset\{self.folder_name}", image)
+                time.sleep(0.5)
+                self.ImageUpdate.emit(path_str)
+            print(self.folder_name)
+
+    def stop(self):
+        self.ThreadActive = False
