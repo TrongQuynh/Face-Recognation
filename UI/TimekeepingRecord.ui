@@ -180,6 +180,9 @@
     <property name="styleSheet">
      <string notr="true">QLineEdit{background: transparent;border:None;border-bottom:1px solid;}</string>
     </property>
+    <property name="placeholderText">
+     <string>Search by name or ID.....</string>
+    </property>
    </widget>
    <widget class="QLineEdit" name="txt_Search_Employee">
     <property name="geometry">
@@ -192,6 +195,9 @@
     </property>
     <property name="styleSheet">
      <string notr="true">QLineEdit{background: transparent;border:None;border-bottom:1px solid;}</string>
+    </property>
+    <property name="placeholderText">
+     <string>Search by name or ID.....</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="rb_InTime">
@@ -459,6 +465,32 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QPushButton" name="btn_Refresh">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>110</y>
+      <width>51</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../public/img/refresh.png</normaloff>../public/img/refresh.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>35</width>
+      <height>35</height>
+     </size>
+    </property>
+   </widget>
    <zorder>lbl_Background</zorder>
    <zorder>tbl_Timekeeping</zorder>
    <zorder>tbl_Employee</zorder>
@@ -483,6 +515,7 @@
    <zorder>btn_Search_Employee</zorder>
    <zorder>btn_Search_Department</zorder>
    <zorder>lbl_Minimize</zorder>
+   <zorder>btn_Refresh</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

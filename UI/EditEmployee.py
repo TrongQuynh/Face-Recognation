@@ -14,11 +14,10 @@ from model.Employee import Employee
 import cv2
 
 
-class UI_New_Employee(QMainWindow):
+class UI_Edit_Employee(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("./UI/NewEmployee.ui", self)
-        self.init_table()
+        uic.loadUi("./UI/EditEmployee.ui", self)
         self.employees = []
         self.setWindowFlag(Qt.FramelessWindowHint)
         # self.avatar.setPixmap(QPixmap("./public/img/default_avatar.png"))
@@ -35,19 +34,13 @@ class UI_New_Employee(QMainWindow):
         self.getDataset_thread = GetDataset_Thread()
         self.showDataset_thread = LoadDataset_Thread()
 
+        self.btn_Back.mousePressEvent = self.event_click_back
+        self.lbl_Close.mousePressEvent = self.event_close_app
+
         self.btn_FaceData.clicked.connect(self.create_folder_dataset)
         self.btn_takePhoto.clicked.connect(self.event_take_photo)
 
-        self.btn_temporarySave.clicked.connect(self.event_loadData)
-
-        self.btn_ClearRow.clicked.connect(self.event_clear_row_Table)
-        self.btn_ClearAll.clicked.connect(self.event_clear_all_row_Table)
         self.btn_ClearData.clicked.connect(self.event_clearTextField)
-
-        self.tbl_Employee.cellClicked.connect(
-            self.event_Fill_Data_To_Component)
-        self.tbl_Employee.cellClicked.connect(
-            self.event_loadDataset)
 
     def ImageUpdateSlot(self, Image):
         self.lbl_Capture.setPixmap(QPixmap.fromImage(Image))
@@ -59,7 +52,7 @@ class UI_New_Employee(QMainWindow):
     def init_form(self):
         self.load_cbox_data()
         self.time_string = str(int(time.time()))
-
+        self.showDataset_thread = LoadDataset_Thread()
         self.init_throughScreenText()
 
     def init_throughScreenText(self):
@@ -68,6 +61,16 @@ class UI_New_Employee(QMainWindow):
         self.label_Text.move(-30, 680)
         self.loopCount = 100
         self.doAnim()
+
+    def load_cbox_data(self):
+        # delete items of list
+        self.cbox_Department.clear()
+
+        # [(1, 'IT'), (2, 'Marketing')]
+        departments = Query().select_All_Department()
+        self.cbox_Department.addItem("None")
+        for d in departments:
+            self.cbox_Department.addItem(d[1])
 
     def doAnim(self):
 
@@ -88,12 +91,16 @@ class UI_New_Employee(QMainWindow):
         phonenumber = self.txt_Phonenumber.text()
         department_name = str(self.cbox_Department.currentText())
         department_id = Query().select_Department_by_Name(department_name)[0]
-        dataset = fullname.replace(" ", "") + "-" + str(int(time.time()))
+        dataset = self.employee.dataset
 
-        print(fullname, email, phonenumber, department_id, dataset)
-        return Employee(fullname, email, phonenumber, dataset, int(department_id))
+        employee = Employee(fullname, email, phonenumber,
+                            dataset, int(department_id))
+        employee.id = self.employee.id
+        self.employee = employee
+        return employee
 
     def setData(self, employee):
+        self.employee = employee
         self.txt_Username.setText(employee.fullname)
         self.txt_Email.setText(employee.email)
         self.txt_Phonenumber.setText(employee.phonenumber)
@@ -110,59 +117,26 @@ class UI_New_Employee(QMainWindow):
         fullname = self.txt_Username.text()
         email = self.txt_Email.text()
         phonenumber = self.txt_Phonenumber.text()
-        print(f"{len(phonenumber)}")
-        if (fullname == "" or email == "" or phonenumber == ""):
-            self.event_show_messageBox(
-                "Warning validate!", "Notification: Please enter enough information")
-            print("Notification: Please enter enough information")
-            return False
-        if (len(phonenumber) != 10 or phonenumber[0] != "0"):
-            print("Your phonenumber is wrong format")
-            self.event_show_messageBox(
-                "Warning validate!", "Your phonenumber is wrong format")
-            return False
-        if ("@gmail.com" not in email or len(email) <= len("@gmail.com")):
-            self.event_show_messageBox(
-                "Warning validate!", "Your email is wrong format")
-            return False
         if (self.cbox_Department.currentIndex() == 0):
             self.event_show_messageBox(
                 "Warning validate!", "Notification: Please choose department")
             print("Notification: Please choose department")
             return False
-
+        if (fullname == "" or email == "" or phonenumber == ""):
+            self.event_show_messageBox(
+                "Warning validate!", "Notification: Please enter enough information")
+            print("Notification: Please enter enough information")
+            return False
         return True
-
-    def init_table(self):
-        # Remove index column of table
-        self.tbl_Employee.verticalHeader().setVisible(False)
-        # Set select by rows instead of individual cells
-        self.tbl_Employee.setSelectionBehavior(QTableView.SelectRows)
-        self.tbl_Employee.setRowCount(0)
-
-        self.tbl_Employee.setColumnWidth(0, 100)
-        self.tbl_Employee.setColumnWidth(0, 200)
-        self.tbl_Employee.setColumnWidth(0, 200)
-        self.tbl_Employee.setColumnWidth(0, 210)
-        self.tbl_Employee.setColumnWidth(0, 210)
-
-        self.tbl_Employee.setHorizontalHeaderLabels(
-            ["Full Name", "Email", "Phone Number", "Department", "Folder Name"])
 
     def create_folder_dataset(self):
 
-        current_row = self.tbl_Employee.currentRow()
-        if (current_row < 0):
-            self.event_show_messageBox(
-                "Warning", "You still not chosen employee")
-            print("Notification: Please choose employee")
-            return
-        folder_name = self.tbl_Employee.item(current_row, 4).text()
+        folder_name = self.employee.dataset
         if (self.isOpenCamera):
             self.isOpenCamera = False
             self.getDataset_thread.stop()
-            self.event_loadDataset()
             # event show dataset
+            self.event_load_dataset(folder_name)
             return
         if os.path.isdir(f"./data/dataset/{folder_name}"):
             reply = self.event_show_message_confirm(
@@ -201,120 +175,55 @@ class UI_New_Employee(QMainWindow):
     def clear_TextField(self):
         self.setData(Employee("", "", "", "", 0))
 
-    # Event
-    def event_clear_row_Table(self):
-        current_row = self.tbl_Employee.currentRow()
-        if (current_row < 0):
-            self.event_show_messageBox("Warning", "Please choose row")
-            print("Notification: Please choose row")
+    def event_load_dataset(self, folder_name):
+
+        if not os.path.isdir(f"./data/dataset/{folder_name}"):
+            print("Notification: Dataset not exist")
             return
+        self.showDataset_thread.start()
+        self.showDataset_thread.folder_name = folder_name
+        self.showDataset_thread.ImageUpdate.connect(self.ImageUpdateDataset)
 
-        reply = self.event_show_message_confirm(
-            "Warning", "Are you sure wanna delete this row?")
-        if (reply == False):
-            return
-
-        folder_name = self.tbl_Employee.item(current_row, 4).text()
-        self.employee = None
-        self.tbl_Employee.removeRow(current_row)
-
-        total_row = self.tbl_Employee.rowCount()
-        self.tbl_Employee.setRowCount(total_row)
-        self.delete_dataset(folder_name)
-
-        # Remove employee from list
-        self.employees.pop(current_row)
-        # self.tbl_Employee.clearContents()
-
-    # before excute complete event check if have enough dataset
     def is_enough_dataset(self):
-        for e in self.employees:
-            dataset = e.dataset
-            if not os.path.isdir(f"./data/dataset/{dataset}"):
-                return dataset
+        if not os.path.isdir(f"./data/dataset/{self.employee.dataset}"):
+            return self.employee.fullname
         return None
 
-    def event_clear_all_row_Table(self):
-        # clear all employee in list
-        self.employees.clear()
-        total_row = self.tbl_Employee.rowCount()
-        if (len(self.employees) == 0):
-            self.event_show_messageBox(
-                "Information", "You do not have any data!")
-            return
-
-        reply = self.event_show_message_confirm(
-            "Warning", "Are you sure wana delete all row data ?")
-        if (reply == False):
-            return
-
-        for r in range(total_row):
-            folder_name = self.tbl_Employee.item(r, 4).text()
-            self.delete_dataset(folder_name)
-
-        self.tbl_Employee.setRowCount(0)
-        self.tbl_Employee.clearContents()
-
     def event_complete(self):
-        if (len(self.employees) < 1):
-            self.event_show_messageBox(
-                "Information", "You do not have any data row!")
-            return
-
-        if (dataset := self.is_enough_dataset()):
+        reply = self.event_show_message_confirm(
+            "Warning", "Are you sure wanna complete ?")
+        if (fullname := self.is_enough_dataset()):
             reply = self.event_show_message_confirm(
-                "Warning", f"Employ is have dataset {dataset} still not have dataset! Are you sure wana complete?")
+                "Warning", f"Employ with name {fullname} still not have dataset! Are you sure wana complete?")
             if (not reply):
                 return
 
-        for e in self.employees:
-            Query().insert_Employee(e)
+        if (self.employee.fullname != str(self.txt_Username.text())):
+            new_name_data_set = str(self.txt_Username.text()).replace(
+                " ", "") + "-" + str(int(time.time()))
+            # replace folder name
+            os.rename(f"./data/dataset/{self.employee.dataset}",
+                      f"./data/dataset/{new_name_data_set}")
+            self.employee.dataset = new_name_data_set
+
+        self.getData()
+        Query().update_Employee_by_ID(self.employee, self.employee.id)
 
         self.event_show_messageBox(
-            "Information", f"Insert successful {len(self.employees)} employess")
+            "Information", f"Update successful 1 employess")
+        self.event_back()
 
-        self.employees.clear()
-        self.tbl_Employee.setRowCount(0)
-        self.tbl_Employee.clearContents()
+    def set_UI_employee_list(self, UI):
+        self.UI_Employee = UI
 
-    def event_loadDataset(self):
-        try:
-            current_row = self.tbl_Employee.currentRow()
-            folder_name = self.tbl_Employee.item(current_row, 4).text()
-            print("Current_Row: " + str(current_row))
-            self.showDataset_thread.stop()
+    def event_click_back(self, *arg, **kwargs):
+        self.event_back()
 
-            self.showDataset_thread.start()
-            self.showDataset_thread.folder_name = folder_name
-
-            self.showDataset_thread.ImageUpdate.connect(
-                self.ImageUpdateDataset)
-        except:
-            print("Notitfication: ERORR when load dataset")
-
-    # Load data for table employee
-    def event_loadData(self):
-        employee = self.getData()
-
-        table_row = self.tbl_Employee.rowCount()
-        if (not employee):
-            return
-        self.employees.append(employee)
-        self.tbl_Employee.setRowCount(table_row + 1)
-
-        self.tbl_Employee.setItem(
-            table_row, 0, QTableWidgetItem(employee.fullname))
-        self.tbl_Employee.setItem(
-            table_row, 1, QTableWidgetItem(employee.email))
-        self.tbl_Employee.setItem(
-            table_row, 2, QTableWidgetItem(employee.phonenumber))
-        self.tbl_Employee.setItem(table_row, 3, QTableWidgetItem(
-            str(self.cbox_Department.currentText())))
-        self.tbl_Employee.setItem(
-            table_row, 4, QTableWidgetItem(employee.dataset))
-
-        # Clear Text field
-        self.clear_TextField()
+    def event_back(self):
+        self.hide()
+        self.UI_Employee.show()
+        self.UI_Employee.load_all_employee_into_table()
+        self.event_stop_all_thread()
 
     def event_clearTextField(self):
         reply = self.event_show_message_confirm(
@@ -356,6 +265,12 @@ class UI_New_Employee(QMainWindow):
         mess.setWindowIcon(QtGui.QIcon("./public/img/back.png"))
         mess.setStandardButtons(QMessageBox.Ok)
         mess.exec_()
+
+    def event_close_app(self, *arg, **kwargs):
+        reply = self.event_show_message_confirm(
+            "Application", "Are you sure wanna close app ?")
+        if (reply):
+            self.close()
 
     def event_show_message_confirm(self, window_title, message_txt):
         reply = QMessageBox.question(

@@ -14,7 +14,7 @@ class Query():
     def insert_Employee(self, employee):
         mydb = db.connectDB()
         mycursor = mydb.cursor()
-        sql_query = "INSERT INTO Employee (fullname, phonenumber,email,dataset,department_id) VALUES (%s, %s,%s, %s, %s)"
+        sql_query = "INSERT INTO Employee (fullname,email,phonenumber,dataset,department_id) VALUES (%s, %s,%s, %s, %s)"
         values = (employee.fullname, employee.email,
                   employee.phonenumber, employee.dataset, employee.department_id)
         mycursor.execute(sql_query, values)
@@ -69,18 +69,46 @@ class Query():
     def delete_Employee_by_ID(self, employee_ID):
         mydb = db.connectDB()
         mycursor = mydb.cursor()
-        sql_query = "DELETE FROM Employee WHERE employee_id = %s"
+        sql_query = "DELETE FROM Employee WHERE id = %s"
         values = (employee_ID,)
         mycursor.execute(sql_query, values)
         mydb.commit()
-        print("Delete employee: " + employee_ID + " Successfull")
+        print("Delete employee: " + str(employee_ID) + " Successfull")
 
+    def update_Employee_by_ID(self, employee, employeeID):
+        mydb = db.connectDB()
+        mycursor = mydb.cursor()
+        sql_query = "UPDATE Employee SET fullname = %s,email= %s,phonenumber= %s,dataset= %s,department_id= %s WHERE id = %s"
+        values = (employee.fullname, employee.email, employee.phonenumber,
+                  employee.dataset, employee.department_id, employeeID)
+        mycursor.execute(sql_query, values)
+        mydb.commit()
+        print(mycursor.rowcount, f"Update Employee {employeeID} success")
+
+    def update_Department_of_Employee(self, employee_ID, department_ID):
+        mydb = db.connectDB()
+        mycursor = mydb.cursor()
+        sql_query = "UPDATE Employee SET department_id= %s WHERE id = %s"
+        values = (department_ID, employee_ID)
+        mycursor.execute(sql_query, values)
+        mydb.commit()
+        print("Update department for employee success")
     # Timekeeping Record
+
     def select_All_TKRecord_by_EmployeeID(self, employee_ID):
         mydb = db.connectDB()
         mycursor = mydb.cursor()
         sql_query = "SELECT * FROM Timekeeping WHERE employee_id = %s"
         values = (employee_ID,)
+        mycursor.execute(sql_query, values)
+        myresult = mycursor.fetchall()
+        return myresult
+
+    def select_All_TKRecord_in_range(self, date_1, date_2):
+        mydb = db.connectDB()
+        mycursor = mydb.cursor()
+        sql_query = "SELECT * FROM Timekeeping WHERE date BETWEEN %s AND %s"
+        values = (date_1, date_2)
         mycursor.execute(sql_query, values)
         myresult = mycursor.fetchall()
         return myresult
@@ -121,6 +149,16 @@ class Query():
         mycursor.execute(sql_query, values)
         myresult = mycursor.fetchall()
         return myresult
+
+    def delete_All_TKRecord_by_EmployeeID(self, employee_ID):
+        mydb = db.connectDB()
+        mycursor = mydb.cursor()
+        sql_query = "DELETE FROM Timekeeping WHERE employee_id = %s"
+        values = (employee_ID,)
+        mycursor.execute(sql_query, values)
+        mydb.commit()
+        print("Delete all timekeeping record: " +
+              str(employee_ID) + " Successfull")
 
     # Department
     def select_Department_by_Name(self, department_name):

@@ -27,6 +27,11 @@ class Timekeeping_Record(QMainWindow):
             self.event_search_department)
         self.btn_Search_Employee.clicked.connect(self.event_search_employee)
 
+        self.from_Date.dateChanged.connect(self.event_filter_TKRecord_by_date)
+        self.to_Date.dateChanged.connect(self.event_filter_TKRecord_by_date)
+
+        self.btn_Refresh.clicked.connect(self.event_Refresh)
+
     def init_form(self):
         self.departments = Query().select_All_Department()
         self.load_data_table_department(self.departments)
@@ -80,6 +85,13 @@ class Timekeeping_Record(QMainWindow):
         self.tbl_Department.setColumnWidth(2, 100)
         self.tbl_Department.setHorizontalHeaderLabels(
             ["ID", "Department name", "Total"])
+
+    def event_filter_TKRecord_by_date(self):
+        from_date = self.from_Date.date()
+        to_date = self.to_Date.date()
+
+        data = Query().select_All_TKRecord_in_range(from_date, to_date)
+        self.load_data_table_TKRecord(data)
 
     def load_data_table_department(self, departments):
         self.tbl_Department.setRowCount(len(departments))
@@ -135,6 +147,12 @@ class Timekeeping_Record(QMainWindow):
             self.tbl_Timekeeping.setItem(
                 table_row, 2, QTableWidgetItem(str(time_out)))
 
+    def event_Refresh(self):
+        self.tbl_Employee.setRowCount(0)
+        self.tbl_Timekeeping.setRowCount(0)
+        departments = Query().select_All_Department()
+        self.load_data_table_department(departments)
+
     # Helper
     def is_number(self, number):
         try:
@@ -157,7 +175,7 @@ class Timekeeping_Record(QMainWindow):
         # (2, datetime.date(2022, 2, 15), datetime.timedelta(seconds=36863), None, 19)
         self.load_data_table_TKRecord(record_data)
 
-    def event_search_employee(self, *arg, **kwargs):
+    def event_search_employee(self):
         current_department_row = self.tbl_Department.currentRow()
         if (current_department_row < 0):
             print("Notification: Please choose department")

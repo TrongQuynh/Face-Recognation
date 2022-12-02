@@ -148,7 +148,7 @@
    <widget class="QLineEdit" name="txt_Search">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>190</x>
       <y>140</y>
       <width>331</width>
       <height>31</height>
@@ -158,7 +158,10 @@
      <string notr="true">QLineEdit{background: transparent;border:None;border-bottom:1px solid;}</string>
     </property>
     <property name="text">
-     <string>Search here</string>
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>Search by name or ID.....</string>
     </property>
    </widget>
    <widget class="QLabel" name="lbl_Background">
@@ -181,7 +184,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>80</y>
+      <y>140</y>
       <width>181</width>
       <height>31</height>
      </rect>
@@ -230,13 +233,16 @@
      <string notr="true">QLineEdit{background: transparent;border:None;border-bottom:1px solid;}</string>
     </property>
     <property name="text">
-     <string>Search Here</string>
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>Search by name or ID.....</string>
     </property>
    </widget>
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>1183</x>
+      <x>1160</x>
       <y>160</y>
       <width>20</width>
       <height>551</height>
@@ -249,9 +255,9 @@
    <widget class="QLineEdit" name="txt_DepartmentName">
     <property name="geometry">
      <rect>
-      <x>1210</x>
-      <y>240</y>
-      <width>221</width>
+      <x>1180</x>
+      <y>230</y>
+      <width>191</width>
       <height>41</height>
      </rect>
     </property>
@@ -259,7 +265,10 @@
      <string notr="true">QLineEdit{background: transparent;border:None;border-bottom:1px solid;}</string>
     </property>
     <property name="text">
-     <string>Enter name</string>
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>Enter Department name</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">
@@ -273,6 +282,7 @@
     </property>
     <property name="font">
      <font>
+      <family>Segoe UI</family>
       <pointsize>13</pointsize>
       <weight>75</weight>
       <bold>true</bold>
@@ -285,8 +295,8 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>1210</x>
-      <y>200</y>
+      <x>1180</x>
+      <y>190</y>
       <width>221</width>
       <height>31</height>
      </rect>
@@ -305,14 +315,14 @@
    <widget class="QPushButton" name="btn_CreateDepartment">
     <property name="geometry">
      <rect>
-      <x>1210</x>
-      <y>300</y>
-      <width>161</width>
-      <height>51</height>
+      <x>1380</x>
+      <y>210</y>
+      <width>81</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
-     <string>Create Department</string>
+     <string>Create</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_Text">
@@ -393,10 +403,10 @@
    <widget class="QPushButton" name="btn_Search">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>140</y>
-      <width>41</width>
-      <height>31</height>
+      <x>530</x>
+      <y>130</y>
+      <width>45</width>
+      <height>45</height>
      </rect>
     </property>
     <property name="text">
@@ -432,6 +442,130 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QPushButton" name="btn_ChangeDepartment">
+    <property name="geometry">
+     <rect>
+      <x>1190</x>
+      <y>440</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Change Department </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>1180</x>
+      <y>330</y>
+      <width>241</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Update Department For Employee</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_CompleteUpdate">
+    <property name="geometry">
+     <rect>
+      <x>1350</x>
+      <y>440</y>
+      <width>121</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Complete Update</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_2">
+    <property name="geometry">
+     <rect>
+      <x>1190</x>
+      <y>300</y>
+      <width>241</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="cbox_Department">
+    <property name="geometry">
+     <rect>
+      <x>1190</x>
+      <y>380</y>
+      <width>271</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QComboBox{background: transparent;border:None;border-bottom:1px solid;}</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>None</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>IT</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Marketing</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>HR</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Sales</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Finance</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="btn_Refresh">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>130</y>
+      <width>45</width>
+      <height>45</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../public/img/refresh.png</normaloff>../public/img/refresh.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>35</width>
+      <height>35</height>
+     </size>
+    </property>
+   </widget>
    <zorder>lbl_Background</zorder>
    <zorder>tbl_Employee</zorder>
    <zorder>dataSet_IMG</zorder>
@@ -453,6 +587,12 @@
    <zorder>btn_Search_2</zorder>
    <zorder>btn_Search</zorder>
    <zorder>lbl_Minimize</zorder>
+   <zorder>btn_ChangeDepartment</zorder>
+   <zorder>label_6</zorder>
+   <zorder>btn_CompleteUpdate</zorder>
+   <zorder>line_2</zorder>
+   <zorder>cbox_Department</zorder>
+   <zorder>btn_Refresh</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

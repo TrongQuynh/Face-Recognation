@@ -27,7 +27,7 @@ def run():
     # capture = cv2.VideoCapture("output2.webm")
     # capture = cv2.VideoCapture("output.mp4")
 
-    capture = cv2.VideoCapture(1)
+    capture = cv2.VideoCapture(2)
 
     while (True):
         _, frame = capture.read()

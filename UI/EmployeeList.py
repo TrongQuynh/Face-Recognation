@@ -1,7 +1,8 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidgetItem, QTableView
-from PyQt5 import uic
+from PyQt5.QtWidgets import QMainWindow, QMessageBox, QTableWidgetItem, QTableView
+from PyQt5 import uic, QtGui
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import QThread, Qt, pyqtSignal
+import shutil
 
 from PyQt5.QtCore import QRect, QPropertyAnimation
 import os
@@ -10,6 +11,8 @@ from threading import Thread
 
 from Query import Query
 from model.Employee import Employee
+
+from UI.EditEmployee import UI_Edit_Employee
 
 is_thread_running = False
 
@@ -30,15 +33,19 @@ class UI_Employee_List(QMainWindow):
         self.table_event()
         self.btn_Delete.clicked.connect(self.event_delete_employee)
         self.btn_Search.clicked.connect(self.event_search)
+        self.btn_Edit.clicked.connect(self.event_edit_employee)
         self.btn_Back.setPixmap(QPixmap("./public/img/back.png"))
 
         # self.show()
     def init_form(self):
+        self.load_all_employee_into_table()
+        self.init_throughScreenText()
+        self.showDataset_thread = LoadDataset_Thread()
+
+    def load_all_employee_into_table(self):
         query = Query()
         employees = query.select_All_Employee()
         self.loadData_table(employees)
-        self.init_throughScreenText()
-        self.showDataset_thread = LoadDataset_Thread()
 
     def init_throughScreenText(self):
         self.label_Text.setText("HUTECH INSTITUTE of INTERNATIONAL EDUCATION")
@@ -125,18 +132,64 @@ class UI_Employee_List(QMainWindow):
         self.loopCount = 0
         self.showDataset_thread.stop()
 
+    def event_show_message_confirm(self, winTitle, message):
+        mess = QMessageBox()
+        mess.setWindowTitle(winTitle)
+        mess.setText(message)
+
+        mess.setIcon(QMessageBox.Warning)
+        mess.setWindowIcon(QtGui.QIcon("./public/img/back.png"))
+        mess.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        if mess.exec_() == QMessageBox.Yes:
+            return True
+        return False
+
+    def event_edit_employee(self):
+        current_row = self.tbl_Employee.currentRow()
+        print(current_row)
+        if (current_row < 0):
+            print("Notification: Please choose employee")
+            return
+        employee_ID = int(self.tbl_Employee.item(current_row, 0).text())
+        employee_Data = Query().select_Employee_by_ID(employee_ID)
+        self.UI_EditEmployee = UI_Edit_Employee()
+        self.UI_EditEmployee.init_form()
+        self.UI_EditEmployee.show()
+        employee = Employee(employee_Data[1], employee_Data[3],
+                            employee_Data[2], employee_Data[4], int(employee_Data[5]))
+        employee.id = employee_Data[0]
+        self.UI_EditEmployee.setData(employee)
+        self.UI_EditEmployee.event_load_dataset(employee_Data[4])
+        self.UI_EditEmployee.set_UI_employee_list(self)
+        self.hide()
+
     def event_delete_employee(self):
         current_row = self.tbl_Employee.currentRow()
         if (current_row < 0):
             print("Notification: Please choose employee")
             return
+        employee_name = str(self.tbl_Employee.item(current_row, 1).text())
+        reply = self.event_show_message_confirm(
+            "Warning", f"Are you sure wanna delete employee {employee_name} ?")
+        if (reply == False):
+            return
         employee_ID = int(self.tbl_Employee.item(current_row, 0).text())
+        dataset = Query().select_Employee_by_ID(employee_ID)[4]
+        self.delete_dataset(dataset)
+        Query().delete_All_TKRecord_by_EmployeeID(employee_ID)
         Query().delete_Employee_by_ID(employee_ID)
-        query = Query()
-        employees = query.select_All_Employee()
+        employees = Query().select_All_Employee()
         self.loadData_table(employees)
 
     # Helper
+
+    def delete_dataset(self, foldername):
+        if not os.path.isdir(f"./data/dataset/{foldername}"):
+            print("Notification: Dataset not exist")
+            self.getDataset_thread.stop()
+            return
+        shutil.rmtree(f"./data/dataset/{foldername}")
+
     def is_number(self, number):
         try:
             int(number)

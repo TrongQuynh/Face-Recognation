@@ -198,7 +198,7 @@ class Recognize_thread(QThread):
                 id, confidence = self.recognizer.predict(gray[y1:y2, x1:x2])
 
                 username = str(self.names[id]).split("-")[0]
-                # print(username, confidence)
+                print(username, confidence)
 
                 # print(username)
                 # confidence_format = f"{int(confidence)} %"
