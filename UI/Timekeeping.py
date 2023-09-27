@@ -33,6 +33,7 @@ class Timekeeping(QMainWindow):
     def init_form(self):
 
         self.lbl_Date.setText(str((date.today()).strftime("%d/%m/%Y")))
+        self.lbl_Capture.setPixmap(QPixmap())
         self.init_table()
         self.load_data_to_TK_table()
 
@@ -44,7 +45,7 @@ class Timekeeping(QMainWindow):
             self.event_show_current_time)
 
         self.init_throughScreenText()
-        self.TE_TimeOut.setTime(QTime(17, 0, 0))
+        # self.TE_TimeOut.setTime(QTime(17, 0, 0))
 
     def init_throughScreenText(self):
         self.label_Text.setText("HUTECH INSTITUTE of INTERNATIONAL EDUCATION")
@@ -86,7 +87,7 @@ class Timekeeping(QMainWindow):
         table_row = 0
         for record in TK_Record:
             employee = Query().select_Employee_by_ID(int(record[4]))
-            #(19, 'Nong Trong Quynh', 'abc@gmail.com', '093866522341', 'NongTrongQuynh-1669052513', 1)
+            # (19, 'Nong Trong Quynh', 'abc@gmail.com', '093866522341', 'NongTrongQuynh-1669052513', 1)
             department_name = Query().select_Department_by_ID(
                 int(employee[5]))[1]
             self.lbl_Timekeeping.setItem(
@@ -108,8 +109,10 @@ class Timekeeping(QMainWindow):
         self.move(qr.topLeft())
 
     def event_stop_all_thread(self):
+        print("Stop Event")
         self.recognize_thread.stop()
         self.loopCount = 0
+
         # self.clock_thread.stop()
 
     def ImageUpdateSlot(self, Image):
@@ -136,7 +139,6 @@ class Timekeeping(QMainWindow):
         if (self.save_TK_thread_isRunning == False):
             self.save_Timekeeping_thread = Save_Timekeeping_thread()
 
-            self.save_Timekeeping_thread.TE_TimeOut = self.TE_TimeOut
             self.save_Timekeeping_thread.dataset = dataset
             self.save_TK_thread_isRunning = True
             self.save_Timekeeping_thread.LoadDataTable.connect(
@@ -151,41 +153,57 @@ class Timekeeping(QMainWindow):
         self.lbl_Clock.setText(str_time)
 
 
+face_cascaded = cv2.CascadeClassifier(
+    f"{os.getcwd()}\config\haarcascade_frontalface_default.xml")
+
+
 class Recognize_thread(QThread):
     ImageUpdate = pyqtSignal(QImage)
     AddTimekeeping = pyqtSignal(str)
     UpdateCurrentTime = pyqtSignal()
-
-    face_cascaded = cv2.CascadeClassifier(
-        f"{os.getcwd()}\config\haarcascade_frontalface_default.xml")
-    recognizer = cv2.face.LBPHFaceRecognizer_create()
-    if not os.path.isfile(f"./data/tranning/training.yml"):
-        print("Not have tranning model")
-        recognizer = None
-    else:
-        recognizer.read(f"{os.getcwd()}\\data\\tranning\\training.yml")
+    ThreadActive = False
 
     start_time = 0
-    names = {}
-    employees = []
 
-    for user in os.listdir("./data/dataset/"):
-        id = int(os.listdir(f"./data/dataset/{user}")[0].split('_')[0])
-        names[id] = user
+    def initData(self):
+        
+        self.names = {}
+        self.employees = []
+        print("Read tranning 2")
+        for user in os.listdir("./data/dataset/"):
+            id = int(os.listdir(f"./data/dataset/{user}")[0].split('_')[0])
+            self.names[id] = user
+
+        self.recognizer = cv2.face.LBPHFaceRecognizer_create()
+        if not os.path.isfile(f"./data/tranning/training.yml"):
+            print("Not have tranning model")
+            self.recognizer = None
+        else:
+            print("Read tranning")
+            self.recognizer.read(
+                f"{os.getcwd()}\\data\\tranning\\training.yml")
 
     def run(self):
+
+        self.initData()
+
+        self.face_cascaded = face_cascaded
         if (self.recognizer == None):
             return
         self.ThreadActive = True
         Capture = cv2.VideoCapture(Variable().index_Capture)
-        while self.ThreadActive:
+        isOpened = Capture.isOpened()
+        while self.ThreadActive and isOpened:
+            if(self.ThreadActive == False):
+                break
+
             ret, frame = Capture.read()
 
             # Flip Image
             # frame = cv2.flip(frame, 1)
 
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            faces = self.face_cascaded.detectMultiScale(gray, 1.3, 5)
+            faces = self.face_cascaded.detectMultiScale(gray, 1.2, 5)
 
             for (x, y, w, h) in faces:
                 x1 = x
@@ -197,16 +215,24 @@ class Recognize_thread(QThread):
                 # Prefic and get ID user
                 id, confidence = self.recognizer.predict(gray[y1:y2, x1:x2])
 
-                username = str(self.names[id]).split("-")[0]
+                if id not in self.names:
+                    username = "Unknown"
+                    cv2.putText(frame, username, (x1, y1),
+                                cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 0))
+                else:
+                    username = str(self.names[id]).split("-")[0]
                 print(username, confidence)
 
                 # print(username)
                 # confidence_format = f"{int(confidence)} %"
                 confidence_format = "  {0}%".format(round(100 - confidence))
 
-                if (confidence < 70):
+                if (confidence < 65 and id in self.names):
 
                     if (self.employees.count(id) == 50):
+                        if (len(faces) == 1):
+                            self.employees[:] = (
+                                value for value in self.employees if value == id)
                         self.AddTimekeeping.emit(str(self.names[id]))
                         self.employees.append(id)
                         # print(self.employees)
@@ -215,11 +241,16 @@ class Recognize_thread(QThread):
                             value for value in self.employees if value != id)
                     else:
                         self.employees.append(id)
+
+                    cv2.putText(frame, username, (x1, y1),
+                                cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 0))
+
                 else:
                     username = "Unknown"
                     # confidence_format = "---"
-                cv2.putText(
-                    frame, username, (x1, y1), cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 0))
+                    cv2.putText(
+                        frame, username, (x1, y1), cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 0, 255))
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 2)
                 # cv2.putText(
                 #     frame, confidence_format, (x1, y2), cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 0))
 
@@ -240,6 +271,7 @@ class Recognize_thread(QThread):
 
     def stop(self):
         self.ThreadActive = False
+        self.employees = []
 
 
 class Save_Timekeeping_thread(QThread):
@@ -254,8 +286,9 @@ class Save_Timekeeping_thread(QThread):
 
     def run(self):
         employee = Query().select_Employee_by_dataset(self.dataset)
-        print(self.TE_TimeOut.time().toString())
-
+        if(employee is None):
+            print("Not found employee")
+            return
         date_today = date.today()
         TR_e_today = Query().select_All_TKRecord_by_EmployeeID_and_Date(
             int(employee[0]), date_today)
@@ -270,16 +303,14 @@ class Save_Timekeeping_thread(QThread):
                 self.New_Save_Timekeeping_thread.emit()
                 return
 
-            time_out = self.TE_TimeOut.time().toString()
+            # time_out = self.TE_TimeOut.time().toString()
             current_time = time.strftime("%H:%M:%S", time.localtime())
 
-            # if current time is larger than time out
-            if (self.is_Time1_Larger_Than_Time2(current_time, time_out)):
-                # update
-                TR_id = TR_e_today[0]
-                print(int(employee[0]), TR_id)
-                Query().update_Timekeeping_Record(
-                    int(employee[0]), int(TR_id[0]))
+            # Update time out
+            TR_id = TR_e_today[0]
+            Query().update_Timekeeping_Record(
+                int(employee[0]), int(TR_id))
+
         else:
             # if this employee not have time in
             T_Record = TimekeepingRecord(int(employee[0]))
@@ -310,3 +341,4 @@ class Clock_Thread(QThread):
         self.ThreadActivity = False
 
 # https: // codetorial.net/en/pyqt5/basics/datetime.html
+# https://pyimagesearch.com/2019/03/11/liveness-detection-with-opencv/

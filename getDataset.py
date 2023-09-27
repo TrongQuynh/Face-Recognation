@@ -12,8 +12,9 @@ def get_data(folder_name):
     user_ID = str(arr[1])
     user_name = str(arr[0])
     print(folder_name)
+    is_start_get_dataset = False
 
-    capture = cv2.VideoCapture(0)
+    capture = cv2.VideoCapture(2)
     # capture = cv2.VideoCapture("output.mp4")
 
     while (True):
@@ -47,7 +48,9 @@ def get_data(folder_name):
         key = cv2.waitKey(delay=1)
 
         if key == ord('s'):
-            if count < 5 and len(new_frame) > 0:
+            is_start_get_dataset = True
+        if is_start_get_dataset:
+            if count < 100 and len(new_frame) > 0:
                 if not os.path.isdir(f"./data/dataset/{folder_name}"):
                     # create new Folder
                     os.mkdir(f"./data/dataset/{folder_name}")
@@ -68,3 +71,6 @@ def get_data(folder_name):
 
     capture.release()
     cv2.destroyAllWindows()
+
+
+get_data("NongTrongQuynh-1669858345")

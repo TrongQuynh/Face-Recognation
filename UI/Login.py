@@ -19,7 +19,7 @@ class Login(QMainWindow):
         self.btn_Close.mousePressEvent = self.event_Close
 
         self.txt_Username.setText("admin")
-        self.txt_Pwd.setText("123")
+        self.txt_Pwd.setText("admin123")
 
     def event_Close(self, *arg, **kwargs):
         reply = QMessageBox.question(
@@ -30,6 +30,6 @@ class Login(QMainWindow):
     def check_Login(self):
         username = self.txt_Username.text()
         pwd = self.txt_Pwd.text()
-        if (str(username) == "admin" and str(pwd) == "123"):
+        if (Query().select_Account(username, pwd)):
             return True
         return False

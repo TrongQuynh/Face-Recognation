@@ -12,6 +12,7 @@ from config.variable import Variable
 from Query import Query
 from model.Employee import Employee
 import cv2
+from trainModel import run
 
 
 class UI_New_Employee(QMainWindow):
@@ -57,6 +58,8 @@ class UI_New_Employee(QMainWindow):
 
         # self.show()
     def init_form(self):
+        self.lbl_Capture.setPixmap(QPixmap())
+        self.dataSet_IMG.setPixmap(QPixmap())
         self.load_cbox_data()
         self.time_string = str(int(time.time()))
 
@@ -270,12 +273,20 @@ class UI_New_Employee(QMainWindow):
         for e in self.employees:
             Query().insert_Employee(e)
 
+        # Tranning Data
+        # self.TrainingDataset = TrainingDataset()
+        # self.TrainingDataset.start()
+        run()
+
         self.event_show_messageBox(
             "Information", f"Insert successful {len(self.employees)} employess")
 
         self.employees.clear()
         self.tbl_Employee.setRowCount(0)
         self.tbl_Employee.clearContents()
+        self.lbl_Capture.setPixmap(QPixmap())
+        self.dataSet_IMG.setPixmap(QPixmap())
+        
 
     def event_loadDataset(self):
         try:
@@ -380,7 +391,8 @@ class GetDataset_Thread(QThread):
         arr = str(self.folder_name).split("-")
         self.user_ID = str(arr[1])
         capture = cv2.VideoCapture(Variable().index_Capture)
-        while self.ThreadActive:
+        isOpened = capture.isOpened()
+        while self.ThreadActive and isOpened:
             ret, frame = capture.read()
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             faces = self.face_cascaded.detectMultiScale(gray, 1.3, 5)
@@ -457,3 +469,8 @@ class LoadDataset_Thread(QThread):
 
     def isThreadRunning(self):
         return self.ThreadActive
+
+
+class TrainingDataset(QThread):
+    def run(self):
+        run()

@@ -3,12 +3,8 @@ from PyQt5 import uic, QtWidgets
 from PyQt5.QtGui import QIcon, QPixmap
 
 import sys
-import time
-import os
-import shutil
 from threading import Thread, Timer
 
-import getDataset
 from Query import Query
 from model.Employee import Employee
 

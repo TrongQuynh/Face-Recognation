@@ -4,6 +4,7 @@ import db
 class Employee:
 
     def __init__(self, fullname, email, phonenumber, dataset, department_id=None) -> None:
+        self.id = None
         self.fullname = fullname
         self.email = email
         self.phonenumber = phonenumber

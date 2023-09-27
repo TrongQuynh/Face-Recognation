@@ -6,4 +6,4 @@ class Variable():
             * 1 - Snap camera
             * 2 - Webcam
         '''
-        self.index_Capture = 2
+        self.index_Capture = 0

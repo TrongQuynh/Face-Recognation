@@ -117,7 +117,11 @@ class Department(QMainWindow):
         date_today = date.today()
         TR_id = Query().select_All_TKRecord_by_EmployeeID_and_Date(
             int(e_ID), date_today)
-        return "ON" if TR_id else "OFF"
+
+        if (TR_id is None):
+            return "OFF"
+
+        return "ON" if TR_id and (TR_id[3] is None) else "OFF"
 
     def load_data_table_employee(self, employees):
         if (len(employees) < 1):

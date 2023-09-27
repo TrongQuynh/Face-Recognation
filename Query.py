@@ -1,5 +1,6 @@
 
 import db
+import bcrypt
 from model.Employee import Employee
 from model.Time_KP_Recoed import TimekeepingRecord
 from model.Department import Department
@@ -83,7 +84,7 @@ class Query():
                   employee.dataset, employee.department_id, employeeID)
         mycursor.execute(sql_query, values)
         mydb.commit()
-        print(mycursor.rowcount, f"Update Employee {employeeID} success")
+        print(mycursor.rowcount, f"Update Employee {employeeID} - {employee.fullname} success")
 
     def update_Department_of_Employee(self, employee_ID, department_ID):
         mydb = db.connectDB()
@@ -104,11 +105,30 @@ class Query():
         myresult = mycursor.fetchall()
         return myresult
 
-    def select_All_TKRecord_in_range(self, date_1, date_2):
+    def select_TKRecord_an_employee_by_Month_Year(self, e_ID, month, year):
         mydb = db.connectDB()
         mycursor = mydb.cursor()
-        sql_query = "SELECT * FROM Timekeeping WHERE date BETWEEN %s AND %s"
-        values = (date_1, date_2)
+        sql_query = "SELECT * FROM Timekeeping WHERE MONTH(date) = %s AND YEAR(date) = %s AND employee_id = %s"
+        values = (month, year, e_ID)
+        mycursor.execute(sql_query, values)
+        myresult = mycursor.fetchall()
+        return myresult
+
+    def select_TKRecord_an_employee_by_Year(self, e_ID, year):
+        mydb = db.connectDB()
+        mycursor = mydb.cursor()
+        sql_query = "SELECT * FROM Timekeeping WHERE YEAR(date) = %s AND employee_id = %s"
+        values = (year, e_ID)
+        mycursor.execute(sql_query, values)
+        myresult = mycursor.fetchall()
+        return myresult
+
+    def select_All_TKRecord_in_range_a_employee(self, e_ID, date):
+        date = str(date).replace("/", "-")
+        mydb = db.connectDB()
+        mycursor = mydb.cursor()
+        sql_query = "SELECT * FROM Timekeeping WHERE date LIKE %s AND employee_id = %s"
+        values = (date, e_ID)
         mycursor.execute(sql_query, values)
         myresult = mycursor.fetchall()
         return myresult
@@ -160,6 +180,15 @@ class Query():
         print("Delete all timekeeping record: " +
               str(employee_ID) + " Successfull")
 
+    def insert_Timekeeping_Record_2(self, employee_ID, date, time_in, time_out):
+        mydb = db.connectDB()
+        mycursor = mydb.cursor()
+        sql_query = "INSERT INTO Timekeeping (employee_id,date, time_in,time_out) VALUES (%s, %s,%s, %s)"
+        values = (employee_ID, date, time_in, time_out)
+        mycursor.execute(sql_query, values)
+        mydb.commit()
+        print(mycursor.rowcount, "record inserted Timekeeping.")
+
     # Department
     def select_Department_by_Name(self, department_name):
         mydb = db.connectDB()
@@ -198,5 +227,33 @@ class Query():
         mydb.commit()
         print(mycursor.rowcount, "Insert new Department Success")
 
+    # Account
+    def insert_Account(self):
+        pwd = b"admin123"
+        hashed = bcrypt.hashpw(pwd, bcrypt.gensalt())
+        mydb = db.connectDB()
+        mycursor = mydb.cursor()
+        sql_query = "INSERT INTO Admin (username, pwd) VALUES (%s,%s)"
+        values = ("admin", hashed)
+        mycursor.execute(sql_query, values)
+        mydb.commit()
+        print(mycursor.rowcount, "Insert new account Success")
 
-query = Query()
+    def select_Account_By_ID(self, ID):
+        mydb = db.connectDB()
+        mycursor = mydb.cursor()
+        sql_query = "SELECT * FROM Admin WHERE ID = %s"
+        values = (ID,)
+        mycursor.execute(sql_query, values)
+        # myresult = mycursor.fetchall()
+        myresult = mycursor.fetchone()
+        return myresult
+
+    def select_Account(self, username, pwd):
+        acc = self.select_Account_By_ID(1)
+        print(acc)
+        if bcrypt.checkpw(str(pwd).encode("utf-8"), acc[2].encode("utf-8")) and acc[1] == username:
+            print("Login success")
+            return True
+        else:
+            return False

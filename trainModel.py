@@ -12,7 +12,7 @@ def run():
         "./config/haarcascade_frontalface_default.xml")
 
     for dir in os.listdir("./data/dataset"):
-        print(dir)
+        # print(dir)
         name_dirs.append(dir)
 
     for name in name_dirs:

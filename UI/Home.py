@@ -115,9 +115,11 @@ class Home(QMainWindow):
         elif (self.current_form == "employee"):
             self.UI_employeeList.hide()
             self.UI_employeeList.event_stop_all_thread()
+        elif (self.current_form == "timekeeping-record"):
+            self.UI_TKRecord.hide()
+            self.current_UI.event_stop_all_thread()
 
         self.UI_department.hide()
-        self.UI_TKRecord.hide()
 
         self.current_UI = self
         self.current_form = "Home"

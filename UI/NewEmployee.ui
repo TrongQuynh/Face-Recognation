@@ -323,7 +323,7 @@
      <string notr="true">QLineEdit{background: transparent;border:None;border-bottom:1px solid;}</string>
     </property>
     <property name="text">
-     <string>093866522341</string>
+     <string>0975338764</string>
     </property>
    </widget>
    <widget class="QComboBox" name="cbox_Department">

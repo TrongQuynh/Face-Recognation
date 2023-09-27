@@ -24,6 +24,13 @@ CREATE TABLE `Department`(
     PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `timekeeping`.`admin` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `pwd` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`ID`));
+
+
 ALTER TABLE
     `Timekeeping` ADD CONSTRAINT `timekeeping_employee_id_foreign` FOREIGN KEY(`employee_id`) REFERENCES `Employee`(`id`);
 ALTER TABLE

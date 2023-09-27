@@ -93,9 +93,9 @@
     <property name="geometry">
      <rect>
       <x>810</x>
-      <y>110</y>
+      <y>220</y>
       <width>651</width>
-      <height>561</height>
+      <height>451</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -247,6 +247,26 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>175</y>
+      <width>201</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Employee List</string>
+    </property>
+   </widget>
    <zorder>lbl_Background</zorder>
    <zorder>dataset_IMG</zorder>
    <zorder>btn_Tranning</zorder>
@@ -258,6 +278,7 @@
    <zorder>btn_Back</zorder>
    <zorder>label</zorder>
    <zorder>lbl_Minimize</zorder>
+   <zorder>label_3</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

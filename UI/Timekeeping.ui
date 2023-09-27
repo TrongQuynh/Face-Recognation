@@ -26,7 +26,7 @@
     <property name="styleSheet">
      <string notr="true">#lbl_Capture{
 	border: 1px solid black;
-	border-radius: 15px
+	background: transparent;
 }</string>
     </property>
     <property name="text">
@@ -152,7 +152,7 @@
     </property>
     <property name="styleSheet">
      <string notr="true">#lbl_Clock{
-	color:#ff0000;
+	color:#00cc03;
 }</string>
     </property>
     <property name="text">
@@ -277,43 +277,6 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QTimeEdit" name="TE_TimeOut">
-    <property name="geometry">
-     <rect>
-      <x>560</x>
-      <y>160</y>
-      <width>118</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="time">
-     <time>
-      <hour>17</hour>
-      <minute>0</minute>
-      <second>0</second>
-     </time>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>560</x>
-      <y>120</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI</family>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Record Time Out</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_Text">
     <property name="geometry">
      <rect>
@@ -397,6 +360,64 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>160</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Time In: 7h</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>160</y>
+      <width>111</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Time Out: 18h</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>140</y>
+      <width>241</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#label_4{
+border: 1 solid black;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <zorder>lbl_Background</zorder>
    <zorder>lbl_Capture</zorder>
    <zorder>lbl_Timekeeping</zorder>
@@ -405,14 +426,15 @@
    <zorder>logo</zorder>
    <zorder>label_2</zorder>
    <zorder>label</zorder>
-   <zorder>TE_TimeOut</zorder>
-   <zorder>label_4</zorder>
    <zorder>label_Text</zorder>
    <zorder>lbl_Header</zorder>
    <zorder>lbl_Close</zorder>
    <zorder>btn_Back</zorder>
    <zorder>label_3</zorder>
    <zorder>lbl_Minimize</zorder>
+   <zorder>label_4</zorder>
+   <zorder>label_5</zorder>
+   <zorder>label_6</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
