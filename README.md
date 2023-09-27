@@ -1,5 +1,5 @@
 
-# Comic Website
+# Face Recognation
 
 Take attendance for employees by face recognition.This application will retrieve the facial data of employees. When the employee checks in, the application checks the data between 2 faces and records the clock-in time. In addition, the application also calculates the number of days absent and late during the month and year.
 
